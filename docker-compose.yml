@@ -1,0 +1,6 @@
+﻿services:
+  supporthub.api:
+    image: supporthub.api
+    build:
+      context: .
+      dockerfile: SupportHub.Api/Dockerfile
