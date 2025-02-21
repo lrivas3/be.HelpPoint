@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SupportHub.Api.Data;
@@ -11,9 +12,11 @@ using SupportHub.Api.Data;
 namespace SupportHub.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250221070352_RolesSeed")]
+    partial class RolesSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace SupportHub.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3e977fb1-ddcd-4b82-b54c-a6f84eafc173",
+                            Id = "2442a44f-7e38-40cf-83f5-dddeb28af17e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7a52571a-e8e2-42a4-a464-f991caff2843",
+                            Id = "2b1031e9-209c-43ba-9838-240a565c28e6",
                             Name = "AreaManager",
                             NormalizedName = "AREAMANAGER"
                         },
                         new
                         {
-                            Id = "b20d4660-00fb-43b7-b360-111104f8874b",
+                            Id = "13220bbd-ad87-45b0-b8c7-003ad3f25de3",
                             Name = "SupportStaff",
                             NormalizedName = "SUPPORTSTAFF"
                         });

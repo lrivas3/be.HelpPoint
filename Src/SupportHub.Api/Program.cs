@@ -9,6 +9,8 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

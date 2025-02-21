@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace SupportHub.Api.Data;
@@ -14,5 +15,14 @@ public class DataContext : IdentityDbContext<ApplicationUser>
         {
             modelBuilder.HasDefaultSchema("Identity");
             base.OnModelCreating(modelBuilder);
+            
+            List<IdentityRole> roles =
+            [
+                new() { Name = "Admin", NormalizedName = "ADMIN" },
+                new() { Name = "AreaManager", NormalizedName = "AREAMANAGER" },
+                new() { Name = "SupportStaff", NormalizedName = "SUPPORTSTAFF" }
+            ];
+            
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
 }
