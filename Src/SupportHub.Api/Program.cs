@@ -1,14 +1,18 @@
 using Scalar.AspNetCore;
+using SupportHub.Api.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services
+    .AddApplicationDbContext(builder.Configuration)
+    .AddIdentityServices()
+    .AddJwtAuthentication(builder.Configuration)
+    .AddOpenApiDocumentation();
+
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -23,8 +27,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
