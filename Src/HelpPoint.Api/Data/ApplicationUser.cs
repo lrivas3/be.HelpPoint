@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SupportHub.Api.Data;
+namespace HelpPoint.Api.Data;
 
 public class ApplicationUser : IdentityUser
 {

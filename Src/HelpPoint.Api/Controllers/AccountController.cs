@@ -2,15 +2,15 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using HelpPoint.Api.Config;
+using HelpPoint.Api.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SupportHub.Api.Config;
-using SupportHub.Api.Data;
 
-namespace SupportHub.Api.Controllers;
+namespace HelpPoint.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

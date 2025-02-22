@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace SupportHub.Api.Migrations
+namespace HelpPoint.Api.Migrations
 {
     /// <inheritdoc />
     public partial class RolesSeed1 : Migration

@@ -1,4 +1,4 @@
-﻿namespace SupportHub.Api.Config;
+﻿namespace HelpPoint.Api.Config;
 
 public class JwtSettings
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SupportHub.Api.Data;
+namespace HelpPoint.Api.Data;
 
 public class DataContext : IdentityDbContext<ApplicationUser>
 {

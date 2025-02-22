@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SupportHub.Api.Migrations
+namespace HelpPoint.Api.Migrations
 {
     /// <inheritdoc />
     public partial class ChangeSchema : Migration

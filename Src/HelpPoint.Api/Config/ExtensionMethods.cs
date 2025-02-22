@@ -1,11 +1,11 @@
 ﻿using System.Text;
+using HelpPoint.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using SupportHub.Api.Data;
 
-namespace SupportHub.Api.Config;
+namespace HelpPoint.Api.Config;
 
 public static class ExtensionMethods
 {

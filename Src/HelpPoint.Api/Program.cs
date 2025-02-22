@@ -1,5 +1,5 @@
 using Scalar.AspNetCore;
-using SupportHub.Api.Config;
+using HelpPoint.Api.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 

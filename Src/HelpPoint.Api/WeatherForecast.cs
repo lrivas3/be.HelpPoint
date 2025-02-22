@@ -1,4 +1,4 @@
-namespace SupportHub.Api;
+namespace HelpPoint.Api;
 
 public class WeatherForecast
 {
