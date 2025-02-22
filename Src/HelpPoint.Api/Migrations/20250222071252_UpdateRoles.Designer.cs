@@ -3,6 +3,7 @@ using System;
 using HelpPoint.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpPoint.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250222071252_UpdateRoles")]
+    partial class UpdateRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,19 +118,19 @@ namespace HelpPoint.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "48e9a536-e576-40c4-981e-f70f40547b9f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2",
+                            Id = "c4d74121-1c31-4cbb-88be-8eb32c114bc3",
                             Name = "AreaManager",
                             NormalizedName = "AREAMANAGER"
                         },
                         new
                         {
-                            Id = "3",
+                            Id = "4117a06e-5cd3-432d-9b17-560802990e41",
                             Name = "SupportStaff",
                             NormalizedName = "SUPPORTSTAFF"
                         });
