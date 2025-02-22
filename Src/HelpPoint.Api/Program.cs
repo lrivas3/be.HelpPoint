@@ -1,5 +1,8 @@
 using Scalar.AspNetCore;
 using HelpPoint.Api.Config;
+using HelpPoint.Contracts;
+using HelpPoint.Core.Common;
+using HelpPoint.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,8 @@ builder.Services
     .AddIdentityServices()
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 

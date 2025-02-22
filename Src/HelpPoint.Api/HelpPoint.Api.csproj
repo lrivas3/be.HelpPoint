@@ -31,4 +31,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HelpPoint.Contracts\HelpPoint.Contracts.csproj" />
+      <ProjectReference Include="..\HelpPoint.Core\HelpPoint.Core.csproj" />
+      <ProjectReference Include="..\HelpPoint.Infrastructure\HelpPoint.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

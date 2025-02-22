@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace HelpPoint.Api.Data;
+namespace HelpPoint.Infrastructure.Database.Models;
 
 public class ApplicationUser : IdentityUser
 {
-    
+
 }

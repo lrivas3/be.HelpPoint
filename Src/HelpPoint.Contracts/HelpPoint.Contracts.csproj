@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HelpPoint.Infrastructure\HelpPoint.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
