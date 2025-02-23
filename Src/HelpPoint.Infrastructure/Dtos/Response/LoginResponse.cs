@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace HelpPoint.Infrastructure.Dtos.Response;
 
-namespace HelpPoint.Infrastructure.Dtos.Response;
-
-public class LoginModel
+public class LoginResponse
 {
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid email address")]
-    public required string Email { get; set; }
-    [Required(ErrorMessage = "Password is required")]
-    public required string Password { get; set; }
+    public string UserName { get; set; }
+    public string Email { get; set; }
+    public string Token { get; set; }
+    public string RefreshToken { get; set; }
 }

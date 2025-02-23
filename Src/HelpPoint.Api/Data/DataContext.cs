@@ -1,8 +1,8 @@
-﻿using HelpPoint.Infrastructure.Database.Models;
+﻿using HelpPoint.Api.Config;
+using HelpPoint.Infrastructure.Database.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Constants = HelpPoint.Api.Config.Constants;
 
 namespace HelpPoint.Api.Data;
 
@@ -20,9 +20,9 @@ public class DataContext : IdentityDbContext<ApplicationUser>
 
         List<IdentityRole> roles =
         [
-            new() { Id = "1", Name = Constants.Admin.Name, NormalizedName = Constants.Admin.Normalizedname },
-            new() { Id = "2", Name = Constants.AreaManager.Name, NormalizedName        = Constants.AreaManager.Normalizedname },
-            new() { Id = "3", Name = Constants.SupportStaff.Name, NormalizedName       = Constants.SupportStaff.Normalizedname }
+            new() { Id = "1", Name = AppConstants.Roles.Admin, NormalizedName = AppConstants.Roles.AdminNormalized },
+            new() { Id = "2", Name = AppConstants.Roles.AreaManager, NormalizedName        = AppConstants.Roles.AreaManagerNormalized },
+            new() { Id = "3", Name = AppConstants.Roles.SupportStaff, NormalizedName       = AppConstants.Roles.SupportStaffNormalized }
         ];
 
         modelBuilder.Entity<IdentityRole>().HasData(roles);
