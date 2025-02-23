@@ -18,6 +18,19 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"))
 
 builder.Services.AddControllers();
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
+builder.Services.AddCors(options =>
+ {
+     options.AddPolicy("AllowConfiguredOrigins", policy =>
+     {
+         policy.WithOrigins(allowedOrigins ?? throw new InvalidOperationException("Cors no configurado"))
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+     });
+ });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -33,7 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowConfiguredOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 
