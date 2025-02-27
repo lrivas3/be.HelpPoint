@@ -3,6 +3,7 @@ using System;
 using HelpPoint.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpPoint.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250227083756_add-entity-models")]
+    partial class addentitymodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,26 +96,22 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.Empleado", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Estado")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UnidadId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -124,13 +123,11 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.EstadoSolicitud", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Codigo")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -140,31 +137,26 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.Menu", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Icon")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<int>("OrderIndex")
                         .HasColumnType("integer");
 
                     b.Property<string>("ParentId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Url")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -176,12 +168,10 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.RoleMenu", b =>
                 {
                     b.Property<string>("RoleId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MenuId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.HasKey("RoleId", "MenuId");
 
@@ -193,8 +183,7 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.SupportRequest", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -202,17 +191,14 @@ namespace HelpPoint.Api.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("EmpleadoId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("EstadoId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("timestamp with time zone");
@@ -222,18 +208,15 @@ namespace HelpPoint.Api.Migrations
 
                     b.Property<string>("Prioridad")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TokenVerificacion")
                         .HasColumnType("text");
@@ -250,24 +233,21 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Support.Unidad", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Unidades", "Support");
                 });
 
-            modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Notificacion", b =>
+            modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Notification", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("ExitoEnvio")
                         .HasColumnType("boolean");
@@ -279,17 +259,14 @@ namespace HelpPoint.Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TicketId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TipoNotificacion")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -303,13 +280,11 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Tag", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -319,21 +294,18 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Ticket", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedByUserId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("text");
 
                     b.Property<string>("EstadoId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("FechaCierre")
                         .HasColumnType("timestamp with time zone");
@@ -346,17 +318,14 @@ namespace HelpPoint.Api.Migrations
 
                     b.Property<string>("PrioridadId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SupportRequestId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -372,8 +341,7 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketAsignacion", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("FechaAsignacion")
                         .HasColumnType("timestamp with time zone");
@@ -383,16 +351,14 @@ namespace HelpPoint.Api.Migrations
 
                     b.Property<string>("TicketId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<int>("TiempoEmpleadoMinutos")
                         .HasColumnType("integer");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -404,8 +370,7 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketComentario", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Comentario")
                         .IsRequired()
@@ -416,13 +381,11 @@ namespace HelpPoint.Api.Migrations
 
                     b.Property<string>("TicketId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -434,13 +397,11 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketEstado", b =>
                 {
                     b.Property<string>("Codigo")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Codigo");
 
@@ -450,23 +411,20 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketHistorial", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CampoModificado")
                         .HasColumnType("text");
 
                     b.Property<string>("ChangedByUserId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("FechaCambio")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("TicketId")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ValorAnterior")
                         .HasColumnType("text");
@@ -484,13 +442,11 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketPrioridad", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Codigo")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -500,16 +456,13 @@ namespace HelpPoint.Api.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.TicketTag", b =>
                 {
                     b.Property<string>("TicketId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)")
-                        .HasColumnOrder(0);
+                        .HasColumnType("text");
 
                     b.Property<string>("TagId")
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)")
-                        .HasColumnOrder(1);
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasKey("TicketId", "TagId");
+                    b.HasKey("TicketId");
 
                     b.HasIndex("TagId");
 
@@ -718,7 +671,7 @@ namespace HelpPoint.Api.Migrations
                     b.Navigation("Estado");
                 });
 
-            modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Notificacion", b =>
+            modelBuilder.Entity("HelpPoint.Infrastructure.Database.Models.Ticket.Notification", b =>
                 {
                     b.HasOne("HelpPoint.Infrastructure.Database.Models.Ticket.Ticket", "Ticket")
                         .WithMany()
