@@ -22,8 +22,7 @@ public class Ticket
     public string CodigoEstado { get; set; } = string.Empty;
 
     [Required]
-    [MaxLength(36)]
-    public string PrioridadId { get; set; } = string.Empty;
+    public Guid PrioridadId { get; set; }
 
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 

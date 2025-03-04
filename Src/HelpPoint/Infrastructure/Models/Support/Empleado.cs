@@ -22,8 +22,7 @@ public class Empleado
     public bool Estado { get; set; }
 
     [Required]
-    [MaxLength(36)]
-    public string UnidadId { get; set; } = string.Empty;
+    public Guid UnidadId { get; set; }
 
     [ForeignKey("UnidadId")]
     public Unidad Unidad { get; set; } = null!;
