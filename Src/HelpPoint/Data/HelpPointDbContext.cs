@@ -1,7 +1,7 @@
 ﻿using HelpPoint.Config;
 using HelpPoint.Infrastructure.Models.Support;
 using HelpPoint.Infrastructure.Models.Ticket;
-using Microsoft.AspNetCore.Identity;
+using HelpPoint.Infrastructure.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpPoint.Data;
@@ -23,19 +23,23 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<TicketTag> TicketTags { get; set; } = null!;
     public DbSet<Notificacion> Notifications { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Roles> Roles { get; set; } = null!;
+    public DbSet<UserRoles> UserRoles { get; set; } = null!;
+    public DbSet<RoleClaims> RoleClaims { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         // Identity roles
-        List<IdentityRole> roles =
+        List<Roles> roles =
         [
-            new() { Id = "1", Name = AppConstants.Roles.Admin, NormalizedName = AppConstants.Roles.AdminNormalized },
-            new() { Id = "2", Name = AppConstants.Roles.AreaManager, NormalizedName = AppConstants.Roles.AreaManagerNormalized },
-            new() { Id = "3", Name = AppConstants.Roles.SupportStaff, NormalizedName = AppConstants.Roles.SupportStaffNormalized }
+            new() { Id = Guid.Parse("01956042-3344-70a8-99d7-7a337595c1ea"), Name = AppConstants.Roles.Admin, NormalizedName = AppConstants.Roles.AdminNormalized },
+            new() { Id = Guid.Parse("01956042-3344-7953-b575-59d8f088a283"), Name = AppConstants.Roles.AreaManager, NormalizedName = AppConstants.Roles.AreaManagerNormalized },
+            new() { Id = Guid.Parse("01956042-3344-7a85-8117-020290a145f9"), Name = AppConstants.Roles.SupportStaff, NormalizedName = AppConstants.Roles.SupportStaffNormalized }
         ];
-        modelBuilder.Entity<IdentityRole>().HasData(roles);
+        modelBuilder.Entity<Roles>().HasData(roles);
 
         // Relaciones para Unidades y Empleados
         modelBuilder.Entity<Empleado>()
@@ -126,6 +130,29 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .HasOne(rm => rm.Menu)
             .WithMany()
             .HasForeignKey(rm => rm.MenuId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relaciones entre Usuarios y Roles
+        modelBuilder.Entity<UserRoles>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+        modelBuilder.Entity<UserRoles>()
+            .HasOne<User>()
+            .WithMany()
+            .HasForeignKey(ur => ur.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<UserRoles>()
+            .HasOne<Roles>()
+            .WithMany()
+            .HasForeignKey(ur => ur.RoleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relaciones para RoleClaims
+        modelBuilder.Entity<RoleClaims>()
+            .HasOne<Roles>()
+            .WithMany()
+            .HasForeignKey(rc => rc.RoleId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HelpPoint.Infrastructure.Database.Models;
+using HelpPoint.Infrastructure.Models.Users;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
 
@@ -23,5 +23,5 @@ public class Notificacion
 
     [ForeignKey("TicketId")] public Ticket? Ticket { get; set; }
 
-    [ForeignKey("UserId")] public ApplicationUser? User { get; set; }
+    [ForeignKey("UserId")] public User? User { get; set; }
 }

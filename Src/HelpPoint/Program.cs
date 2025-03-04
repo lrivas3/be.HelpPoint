@@ -9,8 +9,6 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();
 
-// builder.Services.AddScoped<ITokenService, TokenService>();
-
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
 builder.Services.AddControllers();
