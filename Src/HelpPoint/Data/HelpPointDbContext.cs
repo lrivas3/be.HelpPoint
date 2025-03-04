@@ -1,20 +1,14 @@
 ﻿using HelpPoint.Config;
-using HelpPoint.Infrastructure.Database.Models;
 using HelpPoint.Infrastructure.Database.Models.Support;
 using HelpPoint.Infrastructure.Database.Models.Ticket;
+using HelpPoint.Infrastructure.Models.Ticket;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpPoint.Data;
 
-public class DataContext : IdentityDbContext<ApplicationUser>
+public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : DbContext(options)
 {
-    public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
-    {
-    }
-
     public DbSet<Unidad> Unidades { get; set; } = null!;
     public DbSet<Empleado> Empleados { get; set; } = null!;
     public DbSet<EstadoSolicitud> EstadoSolicitudes { get; set; } = null!;
@@ -33,7 +27,6 @@ public class DataContext : IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("Identity");
         base.OnModelCreating(modelBuilder);
 
         // Identity roles

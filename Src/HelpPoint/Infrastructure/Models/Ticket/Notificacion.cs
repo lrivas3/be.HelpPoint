@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HelpPoint.Infrastructure.Database.Models;
 
-namespace HelpPoint.Infrastructure.Database.Models.Ticket;
+namespace HelpPoint.Infrastructure.Models.Ticket;
 
 [Table("Notificaciones", Schema = "Ticket")]
 public class Notificacion

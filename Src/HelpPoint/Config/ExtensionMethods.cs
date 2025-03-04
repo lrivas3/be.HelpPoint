@@ -1,8 +1,6 @@
 ﻿using System.Text;
 using HelpPoint.Data;
-using HelpPoint.Infrastructure.Database.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,27 +15,8 @@ public static class ExtensionMethods
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<DataContext>(options =>
+        services.AddDbContext<HelpPointDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-
-        return services;
-    }
-
-    /// <summary>
-    /// Adds Identity services (User + Role) with EF Core stores.
-    /// </summary>
-    public static IServiceCollection AddIdentityServices(this IServiceCollection services)
-    {
-        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequiredLength = 10;
-            })
-            .AddEntityFrameworkStores<DataContext>()
-            .AddDefaultTokenProviders();
 
         return services;
     }

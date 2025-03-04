@@ -26,5 +26,5 @@ public class TicketAsignacion
     public int TiempoEmpleadoMinutos { get; set; } = 0;
     
     [ForeignKey("TicketId")]
-    public Ticket Ticket { get; set; } = null!;
+    public Infrastructure.Models.Ticket.Ticket Ticket { get; set; } = null!;
 }

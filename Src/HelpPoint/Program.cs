@@ -1,12 +1,11 @@
-using Scalar.AspNetCore;
 using HelpPoint.Config;
 using HelpPoint.Core.Common;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplicationDbContext(builder.Configuration)
-    .AddIdentityServices()
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();
 
