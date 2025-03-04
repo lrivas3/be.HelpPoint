@@ -132,6 +132,13 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .HasForeignKey(rm => rm.MenuId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // Fix: Ensure RoleMenu correctly references Roles
+        modelBuilder.Entity<RoleMenu>()
+            .HasOne<Roles>()
+            .WithMany()
+            .HasForeignKey(rm => rm.RoleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Relaciones entre Usuarios y Roles
         modelBuilder.Entity<UserRoles>()
             .HasKey(ur => new { ur.UserId, ur.RoleId });
