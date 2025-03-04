@@ -7,12 +7,10 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 public class TicketHistorial
 {
     [Key]
-    [MaxLength(36)]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
     [Required]
-    [MaxLength(36)]
-    public string TicketId { get; set; } = string.Empty;
+    public Guid TicketId { get; set; }
 
     [Required]
     public DateTime FechaCambio { get; set; } = DateTime.UtcNow;
@@ -23,8 +21,7 @@ public class TicketHistorial
 
     public string? ValorNuevo { get; set; }
 
-    [MaxLength(36)]
-    public string? ChangedByUserId { get; set; }
+    public Guid? ChangedByUserId { get; set; }
 
     [ForeignKey("TicketId")]
     public Infrastructure.Models.Ticket.Ticket Ticket { get; set; } = null!;

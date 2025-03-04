@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HelpPoint.Infrastructure.Database.Models.Support;
-using HelpPoint.Infrastructure.Database.Models.Ticket;
+using HelpPoint.Infrastructure.Models.Support;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
 
@@ -9,8 +8,7 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 public class Ticket
 {
     [Key]
-    [MaxLength(36)]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
     public int? OrdenEnTablero { get; set; }
 
@@ -21,8 +19,7 @@ public class Ticket
     public string? Descripcion { get; set; }
 
     [Required]
-    [MaxLength(36)]
-    public string EstadoId { get; set; } = string.Empty;
+    public string CodigoEstado { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(36)]
@@ -32,12 +29,11 @@ public class Ticket
 
     public DateTime? FechaCierre { get; set; }
 
-    [MaxLength(36)]
-    public string? SupportRequestId { get; set; }
+    public Guid? SupportRequestId { get; set; }
 
     [Required]
     [MaxLength(36)]
-    public string CreatedByUserId { get; set; } = string.Empty;
+    public Guid CreatedByUserId { get; set; }
 
     [ForeignKey("EstadoId")]
     public TicketEstado Estado { get; set; } = null!;

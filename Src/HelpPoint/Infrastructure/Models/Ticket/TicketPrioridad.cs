@@ -6,8 +6,7 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 public class TicketPrioridad
 {
     [Key]
-    [MaxLength(36)]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
     [Required]
     [MaxLength(10)]

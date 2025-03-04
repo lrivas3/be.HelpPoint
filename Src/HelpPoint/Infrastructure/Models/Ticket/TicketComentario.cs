@@ -7,15 +7,14 @@ public class TicketComentario
 {
     [Key]
     [MaxLength(36)]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
     [Required]
     [MaxLength(36)]
-    public string TicketId { get; set; } = string.Empty;
+    public Guid TicketId { get; set; }
 
     [Required]
-    [MaxLength(36)]
-    public string UserId { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
 
     [Required]
     public string Comentario { get; set; } = string.Empty;

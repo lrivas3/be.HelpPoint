@@ -7,7 +7,7 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 public class TicketEstado
 {
     [Key]
-    [MaxLength(36)]
+    [MaxLength(10)]
     public string Codigo { get; set; } = string.Empty;
 
     [Required]

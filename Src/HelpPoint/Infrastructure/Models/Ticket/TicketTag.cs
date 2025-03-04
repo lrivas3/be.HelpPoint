@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HelpPoint.Infrastructure.Database.Models.Ticket;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
@@ -10,12 +9,11 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 public class TicketTag
 {
     [Key, Column(Order = 0)]
-    [MaxLength(36)]
-    public string TicketId { get; set; } = string.Empty;
+    public Guid TicketId { get; set; }
 
     [Key, Column(Order = 1)]
     [MaxLength(36)]
-    public string TagId { get; set; } = string.Empty;
+    public Guid TagId { get; set; }
 
     [ForeignKey("TicketId")]
     public Ticket Ticket { get; set; } = null!;

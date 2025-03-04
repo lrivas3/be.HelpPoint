@@ -1,6 +1,5 @@
 ﻿using HelpPoint.Config;
-using HelpPoint.Infrastructure.Database.Models.Support;
-using HelpPoint.Infrastructure.Database.Models.Ticket;
+using HelpPoint.Infrastructure.Models.Support;
 using HelpPoint.Infrastructure.Models.Ticket;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +61,7 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.Estado)
             .WithMany()
-            .HasForeignKey(t => t.EstadoId)
+            .HasForeignKey(t => t.CodigoEstado)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Ticket>()

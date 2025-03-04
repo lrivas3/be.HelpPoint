@@ -1,19 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HelpPoint.Infrastructure.Database.Models.Support;
+namespace HelpPoint.Infrastructure.Models.Support;
 
 [Table("RoleMenus", Schema = "Support")]
 public class RoleMenu
 {
     [Key]
-    [MaxLength(36)]
-    public string RoleId { get; set; } = string.Empty;
-    
+    public Guid RoleId { get; set; }
+
     [Key]
-    [MaxLength(36)]
-    public string MenuId { get; set; } = string.Empty;
-    
+    public Guid MenuId { get; set; }
     [ForeignKey("MenuId")]
     public Menu Menu { get; set; } = null!;
 }

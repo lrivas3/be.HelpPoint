@@ -7,11 +7,11 @@ namespace HelpPoint.Infrastructure.Models.Ticket;
 [Table("Notificaciones", Schema = "Ticket")]
 public class Notificacion
 {
-    [Key] [MaxLength(36)] public string Id { get; set; } = string.Empty;
+    [Key]public Guid Id { get; set; }
 
-    [MaxLength(36)] public string? TicketId { get; set; }
+    public Guid? TicketId { get; set; }
 
-    [MaxLength(36)] public string? UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     [Required] [MaxLength(50)] public string TipoNotificacion { get; set; } = string.Empty;
 
