@@ -4,7 +4,7 @@ using HelpPoint.Infrastructure.Models.Ticket;
 using HelpPoint.Infrastructure.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace HelpPoint.Data;
+namespace HelpPoint.Infrastructure.DataBase;
 
 public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : DbContext(options)
 {

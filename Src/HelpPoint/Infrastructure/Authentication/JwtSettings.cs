@@ -1,4 +1,4 @@
-﻿namespace HelpPoint.Core.Common;
+﻿namespace HelpPoint.Infrastructure.Authentication;
 
 public class JwtSettings
 {

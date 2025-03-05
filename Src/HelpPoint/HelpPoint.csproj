@@ -11,6 +11,10 @@
   <ItemGroup>
 
     <PackageReference Include="AutoMapper"/>
+
+    <PackageReference Include="ErrorOr" />
+
+    <PackageReference Include="FluentValidation.AspNetCore" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
@@ -22,6 +26,10 @@
     <PackageReference Include="Scalar.AspNetCore" />
     <PackageReference Include="Serilog"/>
     <PackageReference Include="Serilog.Extensions.Logging"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

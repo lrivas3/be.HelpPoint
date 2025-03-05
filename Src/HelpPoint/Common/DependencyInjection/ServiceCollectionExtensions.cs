@@ -1,13 +1,28 @@
 ﻿using System.Text;
-using HelpPoint.Data;
+using HelpPoint.Infrastructure.DataBase;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HelpPoint.Config;
+namespace HelpPoint.Common.DependencyInjection;
 
-public static class ExtensionMethods
+public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddGlobalErrorHandling(this IServiceCollection services)
+    {
+        services.AddProblemDetails(options =>
+        {
+            options.CustomizeProblemDetails = context =>
+            {
+                var env = context.HttpContext.RequestServices.GetRequiredService<IHostEnvironment>();
+                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
+                context.ProblemDetails.Extensions["environment"] = env.EnvironmentName;
+            };
+        });
+
+        return services;
+    }
+
     /// <summary>
     /// Adds and configures the database context (using Npgsql in this example).
     /// </summary>

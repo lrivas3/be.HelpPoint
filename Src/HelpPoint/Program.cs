@@ -1,6 +1,6 @@
-using HelpPoint.Config;
-using HelpPoint.Core.Common;
-using Scalar.AspNetCore;
+using HelpPoint.Common.DependencyInjection;
+using HelpPoint.Common.RequestPipeline;
+using HelpPoint.Infrastructure.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +12,8 @@ builder.Services
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
 builder.Services.AddControllers();
+
+// builder.Services.AddSingleton<ProblemDetailsFactory, HelpPointProblemDetailsFactory>();
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
 
@@ -28,17 +30,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options
-            .WithTitle("SupportHub API")
-            .WithTheme(ScalarTheme.DeepSpace)
-            .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl);
-    });
-}
+app.UseGlobalErrorHandling();
+
+app.UseCustomOpenApiViewer();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowConfiguredOrigins");

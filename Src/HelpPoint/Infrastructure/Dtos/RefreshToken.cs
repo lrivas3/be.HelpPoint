@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace HelpPoint.Infrastructure.Dtos;
+﻿namespace HelpPoint.Infrastructure.Dtos;
 
 public class RefreshToken
 {
