@@ -13,4 +13,11 @@ public class AuthController(IAuth auth) : ControllerBase
         var result = await auth.LoginAsync(loginRequest);
         return Ok(result);
     }
+
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest refreshTokenRequest)
+    {
+        var result = await auth.RefreshTokenAsync(refreshTokenRequest);
+        return Ok(result);
+    }
 }

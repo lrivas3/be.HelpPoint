@@ -1,4 +1,5 @@
 using HelpPoint.Infrastructure.Dtos.Request;
+using HelpPoint.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Users;

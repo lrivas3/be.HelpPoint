@@ -7,7 +7,7 @@ namespace HelpPoint.Features.Users;
 
 public class UserService(IUserRepository userRepository, IUserRolesRepository userRolesRepository, IPasswordHasher passwordHasher) : IUserService
 {
-    public async Task<User> CreateUser(RegisterDto registerRequest)
+    public async Task<User?> CreateUser(RegisterDto registerRequest)
     {
         var newUser = new User
         {

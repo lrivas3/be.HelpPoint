@@ -5,5 +5,5 @@ namespace HelpPoint.Features.Users;
 
 public interface IUserService
 {
-    public Task<User> CreateUser(RegisterDto registerRequest);
+    public Task<User?> CreateUser(RegisterDto registerRequest);
 }

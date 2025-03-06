@@ -1,6 +1,7 @@
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
+using System.Security.Claims;
 
 namespace HelpPoint.Features.Auth;
 
@@ -47,5 +48,44 @@ public class AuthService(LoginValidator loginValidator,
         };
 
         return response;
+    }
+
+    public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
+    {
+        var principal = tokenGenerator.ValidateToken(refreshTokenRequest.RefreshToken);
+        if (principal == null)
+        {
+            throw new UnauthorizedException("Invalid refresh token");
+        }
+
+        var userName = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        if (string.IsNullOrEmpty(userName))
+        {
+            throw new UnauthorizedException("Invalid refresh token");
+        }
+
+        var user = await userRepository.GetUserByUserNameAsync(userName) ??
+                   throw new NotFoundException("User not found");
+
+        var roles = await userRepository.GetRolesByIdAsync(user.Id) ??
+                    throw new NotFoundException("Roles for user not found");
+
+        if (roles.Count == 0)
+        {
+            throw new NotFoundException("Roles for user not found");
+        }
+
+        var rolesList = roles.Select(x => x?.NormalizedName).ToList();
+
+        var newAccessToken = tokenGenerator.GenerateToken(user.UserName, rolesList);
+        var newRefreshToken = tokenGenerator.GenerateToken(user.UserName, rolesList, true);
+
+        return new LoginResponse
+        {
+            UserName = user.UserName,
+            Email = user.Email,
+            Token = newAccessToken,
+            RefreshToken = newRefreshToken
+        };
     }
 }

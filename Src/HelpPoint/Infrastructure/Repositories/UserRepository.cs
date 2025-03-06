@@ -26,4 +26,7 @@ public class UserRepository(HelpPointDbContext context) : IUserRepository
         await context.SaveChangesAsync();
         return user;
     }
+
+    public Task<User?> GetUserByUserNameAsync(string userName) =>
+        context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == userName);
 }
