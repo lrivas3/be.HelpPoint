@@ -5,6 +5,8 @@ using HelpPoint.Infrastructure.Authentication;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddFeaturesDependencyInjection()
+    .AddRepositories()
     .AddApplicationDbContext(builder.Configuration)
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();

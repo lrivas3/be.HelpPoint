@@ -2,7 +2,7 @@
 
 namespace HelpPoint.Infrastructure.Dtos.Request;
 
-public class LoginModel
+public class LoginRequest
 {
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email address")]

@@ -1,4 +1,4 @@
-namespace HelpPoint.Common.Errors;
+namespace HelpPoint.Common.Errors.Exceptions;
 
 public class ServiceException(int statusCode, string message) : Exception
 {

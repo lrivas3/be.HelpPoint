@@ -1,5 +1,9 @@
 ﻿using System.Text;
+using HelpPoint.Features.Auth;
+using HelpPoint.Features.Users;
+using HelpPoint.Infrastructure.Authentication;
 using HelpPoint.Infrastructure.DataBase;
+using HelpPoint.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +24,23 @@ public static class ServiceCollectionExtensions
             };
         });
 
+        return services;
+    }
+
+    public static IServiceCollection AddFeaturesDependencyInjection(this IServiceCollection services)
+    {
+        services.AddScoped<IAuth, AuthService>();
+        services.AddScoped<LoginValidator>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<ITokenGenerator, TokenGenerator>();
+        services.AddScoped<IUserService, UserService>();
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRolesRepository, UserRolesRepository>();
         return services;
     }
 

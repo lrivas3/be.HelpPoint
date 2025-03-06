@@ -12,6 +12,8 @@
 
     <PackageReference Include="AutoMapper"/>
 
+    <PackageReference Include="BCrypt.Net-Next" />
+
     <PackageReference Include="ErrorOr" />
 
     <PackageReference Include="FluentValidation.AspNetCore" />

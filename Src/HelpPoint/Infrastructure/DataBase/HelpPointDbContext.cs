@@ -32,14 +32,26 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
     {
         base.OnModelCreating(modelBuilder);
 
-        // Identity roles
-        List<Roles> roles =
-        [
-            new() { Id = Guid.Parse("01956042-3344-70a8-99d7-7a337595c1ea"), Name = AppConstants.Roles.Admin, NormalizedName = AppConstants.Roles.AdminNormalized },
-            new() { Id = Guid.Parse("01956042-3344-7953-b575-59d8f088a283"), Name = AppConstants.Roles.AreaManager, NormalizedName = AppConstants.Roles.AreaManagerNormalized },
-            new() { Id = Guid.Parse("01956042-3344-7a85-8117-020290a145f9"), Name = AppConstants.Roles.SupportStaff, NormalizedName = AppConstants.Roles.SupportStaffNormalized }
-        ];
-        modelBuilder.Entity<Roles>().HasData(roles);
+        modelBuilder.Entity<Roles>().HasData(
+            new Roles
+            {
+                Id = AppConstants.RolesConstants.AdminId,
+                Name = AppConstants.RolesConstants.Admin,
+                NormalizedName = AppConstants.RolesConstants.AdminNormalized
+            },
+            new Roles
+            {
+                Id = AppConstants.RolesConstants.AreaManagerId,
+                Name = AppConstants.RolesConstants.AreaManager,
+                NormalizedName = AppConstants.RolesConstants.AreaManagerNormalized
+            },
+            new Roles
+            {
+                Id = AppConstants.RolesConstants.SupportStaffId,
+                Name = AppConstants.RolesConstants.SupportStaff,
+                NormalizedName = AppConstants.RolesConstants.SupportStaffNormalized
+            }
+        );
 
         // Relaciones para Unidades y Empleados
         modelBuilder.Entity<Empleado>()

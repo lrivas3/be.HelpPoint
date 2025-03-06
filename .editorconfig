@@ -117,7 +117,7 @@ dotnet_style_parentheses_in_other_operators = always_for_clarity:suggestion
 # Expression-level preferences
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions#expression-level-preferences
 dotnet_style_object_initializer = true:warning
-dotnet_style_collection_initializer = true:warning
+# dotnet_style_collection_initializer = false
 dotnet_style_explicit_tuple_names = true:warning
 dotnet_style_prefer_inferred_tuple_names = true:warning
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:warning
@@ -329,7 +329,7 @@ dotnet_diagnostic.IDE0023.severity = suggestion # use expression body for operat
 dotnet_diagnostic.IDE0024.severity = silent # expression body for operators
 dotnet_diagnostic.IDE0025.severity = suggestion # use expression body for properties
 dotnet_diagnostic.IDE0027.severity = suggestion # Use expression body for accessors
-dotnet_diagnostic.IDE0028.severity = silent
+# dotnet_diagnostic.IDE0028.severity = silent
 dotnet_diagnostic.IDE0032.severity = suggestion # Use auto property
 dotnet_diagnostic.IDE0033.severity = error # prefer tuple name
 dotnet_diagnostic.IDE0037.severity = suggestion # simplify anonymous type

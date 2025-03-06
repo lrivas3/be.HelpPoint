@@ -1,13 +1,15 @@
-using HelpPoint.Common.Errors;
+using HelpPoint.Common.Errors.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HelpPoint.Features.ErrorHandling;
+namespace HelpPoint.Common.Errors;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
-public class ErrorController(ILogger<ErrorController> logger) : ControllerBase
+public class ErrorController(ILogger<ErrorController> logger, IWebHostEnvironment env) : ControllerBase
 {
+    private IWebHostEnvironment Env { get; } = env;
+
     [Route("/error")]
     public IActionResult Errors()
     {
@@ -34,7 +36,7 @@ public class ErrorController(ILogger<ErrorController> logger) : ControllerBase
             })
             { StatusCode = validationException.StatusCode },
 
-            _ => Problem("An unexpected error occurred")
+            _ => Env.IsDevelopment() ? throw exception : Problem("An unexpected error occurred")
         };
     }
 }

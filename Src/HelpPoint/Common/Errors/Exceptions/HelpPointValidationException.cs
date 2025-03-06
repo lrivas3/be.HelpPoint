@@ -1,6 +1,6 @@
 using FluentValidation.Results;
 
-namespace HelpPoint.Common.Errors;
+namespace HelpPoint.Common.Errors.Exceptions;
 
 public class HelpPointValidationException : Exception
 {
@@ -10,7 +10,7 @@ public class HelpPointValidationException : Exception
     public HelpPointValidationException(ValidationResult validationResult)
         : base("Validation failed")
     {
-        Errors = new Dictionary<string, string[]>();
+        Errors = [];
 
         foreach (var failure in validationResult.Errors)
         {
