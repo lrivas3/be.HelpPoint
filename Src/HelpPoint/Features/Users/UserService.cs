@@ -61,9 +61,12 @@ public class UserService(IUserRepository userRepository,
             throw new NotFoundException("Usuario no encontrado: "+ currentuser);
         }
 
+        var userRoles = await userRepository.GetRolesByIdAsync(user.Id);
+
         var response = new UserProfileResponse
         {
             Id = user.Id.ToString(),
+            Role = userRoles.FirstOrDefault()?.NormalizedName,
             UserName = user.UserName,
             Name = user.Name + " " + user.LastName,
             Email = user.Email,
@@ -83,6 +86,8 @@ public class UserProfileResponse
     public required string Id { get; set; }
     public required string UserName { get; set; }
     public required string Name { get; set; }
+    public string? Role { get; set; }
+
     public required string Email { get; set; }
     public required string Avatar { get; set; }
 }
