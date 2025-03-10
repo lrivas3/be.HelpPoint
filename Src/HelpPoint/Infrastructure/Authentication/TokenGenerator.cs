@@ -7,13 +7,13 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HelpPoint.Infrastructure.Authentication;
 
-public class TokenGenerator(IOptions<JwtSettings> key) : ITokenGenerator
+public class TokenGenerator(IOptions<JwtSettings> jwtSettings) : ITokenGenerator
 {
-    private readonly string _key = key.Value.SecretKey;
+    private readonly JwtSettings _settings = jwtSettings.Value;
 
     public string GenerateToken(string userName, List<string?> roles, bool isRefreshToken = false)
     {
-        var key = Convert.FromBase64String(_key);
+        var key = Convert.FromBase64String(_settings.SecretKey);
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var claims = new List<Claim>
@@ -33,7 +33,9 @@ public class TokenGenerator(IOptions<JwtSettings> key) : ITokenGenerator
             Expires = expirationTime,
             IssuedAt = DateTime.UtcNow,
             SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature),
+            Audience = _settings.Audience,
+            Issuer = _settings.Issuer,
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -43,7 +45,7 @@ public class TokenGenerator(IOptions<JwtSettings> key) : ITokenGenerator
     public ClaimsPrincipal? ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Convert.FromBase64String(_key);
+        var key = Convert.FromBase64String(_settings.SecretKey);
 
         try
         {

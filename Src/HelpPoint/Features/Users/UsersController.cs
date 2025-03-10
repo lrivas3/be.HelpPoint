@@ -1,5 +1,6 @@
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Users;
@@ -13,5 +14,13 @@ public class UsersController(IUserService userService) : ControllerBase
     {
         var response = await userService.CreateUser(request);
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetuserProfile()
+    {
+        var user = await userService.GetUserProfile();
+        return Ok(user);
     }
 }

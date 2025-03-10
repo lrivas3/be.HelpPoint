@@ -7,6 +7,10 @@ namespace HelpPoint.Infrastructure.Repositories;
 
 public class UserRepository(HelpPointDbContext context) : IUserRepository
 {
+    public Task<bool> UserExists(string username) => context.Users.AnyAsync(x=> x.UserName == username);
+
+    public Task<bool> EmailExists(string email) => context.Users.AnyAsync(x=> x.Email == email);
+
     public async Task<User?> GetUserByEmailAsync(string email)
         => await context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
 

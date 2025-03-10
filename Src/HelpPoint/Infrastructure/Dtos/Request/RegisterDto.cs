@@ -6,6 +6,10 @@ public class RegisterDto
 {
     [Required]
     public required string UserName { get; set; }
+    [Required(ErrorMessage = "Name is required")]
+    public required string Name { get; set; }
+    [Required(ErrorMessage = "LastName is required")]
+    public required string LastName { get; set; }
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public required string Email { get; set; }

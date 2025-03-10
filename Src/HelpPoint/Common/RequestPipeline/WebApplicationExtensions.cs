@@ -1,6 +1,3 @@
-using HelpPoint.Common.Errors;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Scalar.AspNetCore;
 
 namespace HelpPoint.Common.RequestPipeline;

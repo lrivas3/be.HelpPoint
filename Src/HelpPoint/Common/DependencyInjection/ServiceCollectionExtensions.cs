@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using HelpPoint.Common.Http;
 using HelpPoint.Features.Auth;
 using HelpPoint.Features.Users;
 using HelpPoint.Infrastructure.Authentication;
@@ -34,6 +35,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenGenerator, TokenGenerator>();
         services.AddScoped<IUserService, UserService>();
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         return services;
     }
 
@@ -89,7 +92,7 @@ public static class ServiceCollectionExtensions
                     ValidIssuer = issuer,
                     ValidAudience = audience,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(secretKey!))
+                        Convert.FromBase64String(secretKey!))
                 };
             });
 
