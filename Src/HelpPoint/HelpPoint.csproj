@@ -10,6 +10,12 @@
 
   <ItemGroup>
 
+    <PackageReference Include="Asp.Versioning.Http" />
+
+    <PackageReference Include="Asp.Versioning.Mvc" />
+
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+
     <PackageReference Include="AutoMapper"/>
 
     <PackageReference Include="BCrypt.Net-Next" />
@@ -28,10 +34,6 @@
     <PackageReference Include="Scalar.AspNetCore" />
     <PackageReference Include="Serilog"/>
     <PackageReference Include="Serilog.Extensions.Logging"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,7 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddOpenApiDocumentation();
 
+builder.Services.AddVersioning();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
 builder.Services.AddControllers();
@@ -33,6 +34,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 app.UseGlobalErrorHandling();
+app.UseVersionSet();
 
 app.UseCustomOpenApiViewer();
 

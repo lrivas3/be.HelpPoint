@@ -1,12 +1,13 @@
+using Asp.Versioning;
 using HelpPoint.Infrastructure.Dtos.Request;
-using HelpPoint.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Users;
 
 [ApiController]
-[Route("api/v1/user")]
+[Route("api/v{version:apiVersion}/users")]
+[ApiVersion("1.0")]
 public class UsersController(IUserService userService) : ControllerBase
 {
     [HttpPost]
