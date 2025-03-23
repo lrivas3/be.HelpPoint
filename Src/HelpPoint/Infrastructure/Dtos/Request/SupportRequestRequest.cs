@@ -11,3 +11,11 @@ public class SupportRequestRequest
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
 }
+
+public class SupportRequestUpdateRequest
+{
+    public string Titulo { get; set; } = string.Empty;
+    public string Descripcion { get; set; } = string.Empty;
+    public int EstadoId { get; set; }
+    public string? TokenVerificacion { get; set; }
+}

@@ -41,4 +41,14 @@ public class SupportController(ISupport support) : ControllerBase
         var response = await support.ListSupportRequestsAsync();
         return Ok(response);
     }
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<List<SupportRequestResponse>>>
+        UpdateSupportRequests([FromBody]SupportRequestUpdateRequest request, Guid id)
+    {
+        var response = await support.UpdateSupportRequestAsync(request, id);
+        return Ok(response);
+    }
 }

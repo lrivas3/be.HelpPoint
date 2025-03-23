@@ -12,8 +12,5 @@ public class SupportRequestRepository(HelpPointDbContext context) : Repository<S
         _ = await context.SaveChangesAsync();
         return entry.Entity;
     }
-
-    public Task<SupportRequest?> UpdateSupportRequestAsync(SupportRequest supportRequest) => throw new NotImplementedException();
-
     public Task<bool> DeleteSupportRequestAsync(int id) => throw new NotImplementedException();
 }
