@@ -12,7 +12,7 @@ namespace HelpPoint.Features.Support;
 public class SupportController(ISupport support) : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<SupportRequestResponse>> CreateSupportRequest([FromBody] SupportRequestRequest supportRequest)
     {
@@ -34,7 +34,6 @@ public class SupportController(ISupport support) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<SupportRequestResponse>>>
         ListSupportRequests()
     {
