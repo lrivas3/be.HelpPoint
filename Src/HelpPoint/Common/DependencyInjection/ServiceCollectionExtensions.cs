@@ -2,6 +2,8 @@
 using Asp.Versioning;
 using HelpPoint.Common.Http;
 using HelpPoint.Features.Auth;
+using HelpPoint.Features.Employees;
+using HelpPoint.Features.Support;
 using HelpPoint.Features.Users;
 using HelpPoint.Infrastructure.Authentication;
 using HelpPoint.Infrastructure.DataBase;
@@ -31,20 +33,25 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddFeaturesDependencyInjection(this IServiceCollection services)
     {
-        services.AddScoped<IAuth, AuthService>();
-        services.AddScoped<LoginValidator>();
-        services.AddScoped<IPasswordHasher, PasswordHasher>();
-        services.AddScoped<ITokenGenerator, TokenGenerator>();
-        services.AddScoped<IUserService, UserService>();
-        services.AddHttpContextAccessor();
+        _ = services.AddScoped<IAuth, AuthService>()
+            .AddScoped<LoginValidator>()
+            .AddScoped<IPasswordHasher, PasswordHasher>()
+            .AddScoped<ITokenGenerator, TokenGenerator>()
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<ISupport, SupportRequestService>();
+
         services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
+        services.AddHttpContextAccessor();
         return services;
     }
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+        _ = services.AddScoped(typeof(IRepository<>), typeof(Repository<>))
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IUserRolesRepository, UserRolesRepository>()
+            .AddScoped<ISupportRequestRepository, SupportRequestRepository>()
+            .AddScoped<IEmployeeRepository, EmployeeRepository>();
         return services;
     }
 

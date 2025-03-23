@@ -3,6 +3,7 @@ using System;
 using HelpPoint.Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpPoint.Migrations
 {
     [DbContext(typeof(HelpPointDbContext))]
-    partial class HelpPointDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250322174706_PrioridadYTipoUpdateStep1")]
+    partial class PrioridadYTipoUpdateStep1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +53,23 @@ namespace HelpPoint.Migrations
                     b.HasIndex("UnidadId");
 
                     b.ToTable("Empleados", "Support");
+                });
+
+            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.EstadoSolicitud", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EstadoSolicitudes", "Support");
                 });
 
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.Menu", b =>
@@ -104,23 +124,6 @@ namespace HelpPoint.Migrations
                     b.ToTable("RoleMenus", "Support");
                 });
 
-            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.SupportEstado", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SupportEstado", "Support");
-                });
-
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.SupportRequest", b =>
                 {
                     b.Property<Guid>("Id")
@@ -140,14 +143,14 @@ namespace HelpPoint.Migrations
                     b.Property<Guid?>("EmpleadoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("EstadoId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("FechaResolucion")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("TipoId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -161,9 +164,26 @@ namespace HelpPoint.Migrations
 
                     b.HasIndex("EmpleadoId");
 
-                    b.HasIndex("EstadoId");
+                    b.HasIndex("TipoId");
 
                     b.ToTable("SupportRequests", "Support");
+                });
+
+            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.Tipo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tipo", "Support");
                 });
 
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.Unidad", b =>
@@ -240,23 +260,6 @@ namespace HelpPoint.Migrations
                     b.ToTable("Notificaciones", "Ticket");
                 });
 
-            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Ticket.Prioridad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Prioridad", "Ticket");
-                });
-
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Ticket.Tag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -280,6 +283,10 @@ namespace HelpPoint.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("CodigoEstado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<Guid>("CreatedByUserId")
                         .HasMaxLength(36)
                         .HasColumnType("uuid");
@@ -299,9 +306,6 @@ namespace HelpPoint.Migrations
                     b.Property<int?>("OrdenEnTablero")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PrioridadId")
-                        .HasColumnType("integer");
-
                     b.Property<Guid?>("SupportRequestId")
                         .HasColumnType("uuid");
 
@@ -316,8 +320,6 @@ namespace HelpPoint.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EstadoId");
-
-                    b.HasIndex("PrioridadId");
 
                     b.HasIndex("SupportRequestId");
 
@@ -430,23 +432,6 @@ namespace HelpPoint.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("TicketTags", "Ticket");
-                });
-
-            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Ticket.Tipo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tipo", "Ticket");
                 });
 
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Users.RoleClaims", b =>
@@ -624,15 +609,11 @@ namespace HelpPoint.Migrations
                         .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("HelpPoint.Infrastructure.Models.Support.SupportEstado", "Estado")
-                        .WithMany()
-                        .HasForeignKey("EstadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("HelpPoint.Infrastructure.Models.Support.Tipo", null)
+                        .WithMany("SupportRequests")
+                        .HasForeignKey("TipoId");
 
                     b.Navigation("Empleado");
-
-                    b.Navigation("Estado");
                 });
 
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Ticket.Notificacion", b =>
@@ -656,13 +637,7 @@ namespace HelpPoint.Migrations
                     b.HasOne("HelpPoint.Infrastructure.Models.Ticket.Estado", "Estado")
                         .WithMany()
                         .HasForeignKey("EstadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HelpPoint.Infrastructure.Models.Ticket.Prioridad", "Prioridad")
-                        .WithMany()
-                        .HasForeignKey("PrioridadId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HelpPoint.Infrastructure.Models.Support.SupportRequest", "SupportRequest")
@@ -670,15 +645,13 @@ namespace HelpPoint.Migrations
                         .HasForeignKey("SupportRequestId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("HelpPoint.Infrastructure.Models.Ticket.Tipo", "Tipo")
+                    b.HasOne("HelpPoint.Infrastructure.Models.Support.Tipo", "Tipo")
                         .WithMany()
                         .HasForeignKey("TipoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Estado");
-
-                    b.Navigation("Prioridad");
 
                     b.Navigation("SupportRequest");
 
@@ -764,6 +737,11 @@ namespace HelpPoint.Migrations
             modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.Menu", b =>
                 {
                     b.Navigation("SubMenus");
+                });
+
+            modelBuilder.Entity("HelpPoint.Infrastructure.Models.Support.Tipo", b =>
+                {
+                    b.Navigation("SupportRequests");
                 });
 #pragma warning restore 612, 618
         }

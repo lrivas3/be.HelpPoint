@@ -6,9 +6,7 @@ namespace HelpPoint.Infrastructure.Models.Support;
 [Table("Empleados", Schema = "Support")]
 public class Empleado
 {
-    [Key]
-    [MaxLength(36)]
-    public Guid Id { get; set; }
+    [Key] [MaxLength(36)] public required Guid Id { get; set; }
 
     [Required]
     [MaxLength(255)]

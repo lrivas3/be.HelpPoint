@@ -9,6 +9,7 @@ builder.Services
     .AddRepositories()
     .AddApplicationDbContext(builder.Configuration)
     .AddJwtAuthentication(builder.Configuration)
+    .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
     .AddOpenApiDocumentation();
 
 builder.Services.AddVersioning();

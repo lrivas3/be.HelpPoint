@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
 
-[Table("TicketEstados", Schema = "Ticket")]
-public class TicketEstado
+[Table("Estado", Schema = "Ticket")]
+public class Estado
 {
     [Key]
-    [MaxLength(10)]
-    public string Codigo { get; set; } = string.Empty;
+    public int Id { get; set; }
+    [Required]
+    [MaxLength(15)]
+    public string NombreEstado { get; set; } = string.Empty;
 
     [Required]
-    [MaxLength(255)]
+    [MaxLength(50)]
     public string Descripcion { get; set; } = string.Empty;
 }

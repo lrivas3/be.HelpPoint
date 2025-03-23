@@ -15,18 +15,8 @@ public class SupportRequest
 
     [Required]
     public string Descripcion { get; set; } = string.Empty;
-
     [Required]
-    [MaxLength(10)]
-    public string Prioridad { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(50)]
-    public string Tipo { get; set; } = string.Empty;
-
-    [Required]
-    [MaxLength(36)]
-    public Guid EstadoId { get; set; }
+    public int EstadoId { get; set; }
 
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
@@ -40,9 +30,8 @@ public class SupportRequest
 
     public string? TokenVerificacion { get; set; }
 
-    [ForeignKey("EstadoId")]
-    public EstadoSolicitud Estado { get; set; } = null!;
-
     [ForeignKey("EmpleadoId")]
     public Empleado? Empleado { get; set; }
+    [ForeignKey("EstadoId")]
+    public SupportEstado Estado { get; set; } = null!;
 }

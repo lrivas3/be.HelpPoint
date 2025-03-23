@@ -10,12 +10,9 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
 {
     public DbSet<Unidad> Unidades { get; set; } = null!;
     public DbSet<Empleado> Empleados { get; set; } = null!;
-    public DbSet<EstadoSolicitud> EstadoSolicitudes { get; set; } = null!;
     public DbSet<SupportRequest> SupportRequests { get; set; } = null!;
     public DbSet<Menu> Menus { get; set; } = null!;
     public DbSet<RoleMenu> RolesMenus { get; set; } = null!;
-    public DbSet<TicketEstado> TicketEstados { get; set; } = null!;
-    public DbSet<TicketPrioridad> TicketPrioridades { get; set; } = null!;
     public DbSet<Ticket> Tickets { get; set; } = null!;
     public DbSet<TicketAsignacion> TicketAsignaciones { get; set; } = null!;
     public DbSet<TicketHistorial> TicketHistorial { get; set; } = null!;
@@ -27,6 +24,10 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
     public DbSet<Roles> Roles { get; set; } = null!;
     public DbSet<UserRoles> UserRoles { get; set; } = null!;
     public DbSet<RoleClaims> RoleClaims { get; set; } = null!;
+    public DbSet<Estado> TicketEstados { get; set; } = null!;
+    public DbSet<Tipo> Tipos { get; set; } = null!;
+    public DbSet<Prioridad> Prioridades { get; set; } = null!;
+    public DbSet<SupportEstado> SupportEstados { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,11 +62,6 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .OnDelete(DeleteBehavior.Restrict);
 
         // Relaciones para Support Requests
-        modelBuilder.Entity<SupportRequest>()
-            .HasOne(s => s.Estado)
-            .WithMany()
-            .HasForeignKey(s => s.EstadoId)
-            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<SupportRequest>()
             .HasOne(s => s.Empleado)
@@ -73,11 +69,15 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .HasForeignKey(s => s.EmpleadoId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        // Relaciones para Tickets
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.Estado)
             .WithMany()
-            .HasForeignKey(t => t.CodigoEstado)
+            .HasForeignKey(t => t.EstadoId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Ticket>()
+            .HasOne(t => t.Tipo)
+            .WithMany()
+            .HasForeignKey(t => t.TipoId)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Ticket>()
@@ -173,5 +173,11 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .WithMany()
             .HasForeignKey(rc => rc.RoleId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SupportRequest>()
+            .HasOne(s => s.Estado)
+            .WithMany()
+            .HasForeignKey(s => s.EstadoId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

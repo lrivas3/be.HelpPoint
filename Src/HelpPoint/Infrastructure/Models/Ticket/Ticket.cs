@@ -19,10 +19,11 @@ public class Ticket
     public string? Descripcion { get; set; }
 
     [Required]
-    public string CodigoEstado { get; set; } = string.Empty;
-
+    public int EstadoId { get; set; }
     [Required]
-    public Guid PrioridadId { get; set; }
+    public int TipoId { get; set; }
+    [Required]
+    public int PrioridadId { get; set; }
 
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
@@ -35,10 +36,12 @@ public class Ticket
     public Guid CreatedByUserId { get; set; }
 
     [ForeignKey("EstadoId")]
-    public TicketEstado Estado { get; set; } = null!;
+    public Estado Estado { get; set; } = null!;
 
+    [ForeignKey("TipoId")]
+    public Tipo Tipo { get; set; } = null!;
     [ForeignKey("PrioridadId")]
-    public TicketPrioridad Prioridad { get; set; } = null!;
+    public Prioridad Prioridad { get; set; } = null!;
 
     [ForeignKey("SupportRequestId")]
     public SupportRequest? SupportRequest { get; set; }
