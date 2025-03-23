@@ -4,10 +4,8 @@ using HelpPoint.Infrastructure.Models.Support;
 
 namespace HelpPoint.Infrastructure.Repositories;
 
-public class SupportRequestRepository(HelpPointDbContext context) : ISupportRequestRepository
+public class SupportRequestRepository(HelpPointDbContext context) : Repository<SupportRequest>(context),ISupportRequestRepository
 {
-    public Task<SupportRequest?> GetSupportRequestByIdAsync(int id) => throw new NotImplementedException();
-
     public async Task<SupportRequest?> CreateSupportRequestAsync(SupportRequest supportRequest)
     {
         var entry = await context.SupportRequests.AddAsync(supportRequest);

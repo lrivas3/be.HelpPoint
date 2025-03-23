@@ -27,7 +27,22 @@ public class SupportRequestService(
 
     public Task<SupportRequestResponse> UpdateSupportRequestAsync(SupportRequestRequest request) => throw new NotImplementedException();
 
-    public Task<SupportRequestResponse> GetSupportRequestAsync(Guid requestId) => throw new NotImplementedException();
+    public async Task<SupportRequestResponse> GetSupportRequestAsync(Guid requestId)
+    {
+        var supportRequest = await supportRequestRepository.GetByIdAsync(requestId) ??
+                             throw new NotFoundException("No se encontro la solicitud de soporte");
+
+        var response = mapper.Map<SupportRequestResponse>(supportRequest);
+
+        return response;
+    }
+
+    public async Task<List<SupportRequestResponse>> ListSupportRequestsAsync()
+    {
+        var supRequests = await supportRequestRepository.GetAllAsync();
+        var response = mapper.Map<List<SupportRequestResponse>>(supRequests);
+        return response;
+    }
 
     public Task<SupportRequestResponse> DeleteSupportRequestAsync(Guid requestId) => throw new NotImplementedException();
 }
