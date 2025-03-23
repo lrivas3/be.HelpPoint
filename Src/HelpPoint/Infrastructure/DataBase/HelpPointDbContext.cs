@@ -36,21 +36,21 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
         modelBuilder.Entity<Roles>().HasData(
             new Roles
             {
-                Id = AppConstants.RolesConstants.AdminId,
-                Name = AppConstants.RolesConstants.Admin,
-                NormalizedName = AppConstants.RolesConstants.AdminNormalized
+                Id = AppConfigConstants.RolesConstants.AdminId,
+                Name = AppConfigConstants.RolesConstants.Admin,
+                NormalizedName = AppConfigConstants.RolesConstants.AdminNormalized
             },
             new Roles
             {
-                Id = AppConstants.RolesConstants.AreaManagerId,
-                Name = AppConstants.RolesConstants.AreaManager,
-                NormalizedName = AppConstants.RolesConstants.AreaManagerNormalized
+                Id = AppConfigConstants.RolesConstants.AreaManagerId,
+                Name = AppConfigConstants.RolesConstants.AreaManager,
+                NormalizedName = AppConfigConstants.RolesConstants.AreaManagerNormalized
             },
             new Roles
             {
-                Id = AppConstants.RolesConstants.SupportStaffId,
-                Name = AppConstants.RolesConstants.SupportStaff,
-                NormalizedName = AppConstants.RolesConstants.SupportStaffNormalized
+                Id = AppConfigConstants.RolesConstants.SupportStaffId,
+                Name = AppConfigConstants.RolesConstants.SupportStaff,
+                NormalizedName = AppConfigConstants.RolesConstants.SupportStaffNormalized
             }
         );
 

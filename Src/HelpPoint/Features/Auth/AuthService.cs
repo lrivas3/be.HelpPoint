@@ -2,6 +2,7 @@ using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using System.Security.Claims;
+using HelpPoint.Common.Constants;
 
 namespace HelpPoint.Features.Auth;
 
@@ -27,11 +28,11 @@ public class AuthService(LoginValidator loginValidator,
         {
             throw new UnauthorizedException("Invalid email or password");
         }
-        var roles = await userRepository.GetRolesByIdAsync(user.Id) ?? throw new NotFoundException("Roles for user not found");
+        var roles = await userRepository.GetRolesByIdAsync(user.Id) ?? throw new NotFoundException(AppConstants.ErrorMessages.RolesNotFoundMsg);
 
         if (roles.Count == 0)
         {
-            throw new NotFoundException("Roles for user not found");
+            throw new NotFoundException(AppConstants.ErrorMessages.RolesNotFoundMsg);
         }
 
         var rolesList = roles.Select(x => x?.NormalizedName).ToList();

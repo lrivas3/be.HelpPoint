@@ -1,6 +1,6 @@
 ﻿namespace HelpPoint.Config;
 
-public static class AppConstants
+public static class AppConfigConstants
 {
     public static class RolesConstants
     {

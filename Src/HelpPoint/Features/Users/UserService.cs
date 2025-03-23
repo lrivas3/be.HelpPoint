@@ -45,7 +45,7 @@ public class UserService(IUserRepository userRepository,
         var newUserRole = new UserRoles
         {
             UserId = newUser.Id,
-            RoleId = AppConstants.RolesConstants.SupportStaffId
+            RoleId = AppConfigConstants.RolesConstants.SupportStaffId
         };
         await userRolesRepository.AddAsync(newUserRole);
 
