@@ -4,6 +4,7 @@ using HelpPoint.Features.Employees;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Support;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace HelpPoint.Features.Support;
 
@@ -53,5 +54,11 @@ public class SupportRequestService(
         return response;
     }
 
-    public Task<SupportRequestResponse> DeleteSupportRequestAsync(Guid requestId) => throw new NotImplementedException();
+    public async Task<bool> DeleteSupportRequestAsync(Guid requestId)
+    {
+        var existingRequest = await supportRequestRepository.GetByIdAsync(requestId) ??
+                            throw new NotFoundException("No se encontró la solicitud");
+        await supportRequestRepository.DeleteAsync(existingRequest);
+        return true;
+    }
 }

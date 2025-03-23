@@ -9,5 +9,5 @@ public interface ISupport
     public Task<SupportRequestResponse> UpdateSupportRequestAsync(SupportRequestUpdateRequest request, Guid id);
     public Task<SupportRequestResponse> GetSupportRequestAsync(Guid requestId);
     public Task<List<SupportRequestResponse>> ListSupportRequestsAsync();
-    public Task<SupportRequestResponse> DeleteSupportRequestAsync(Guid requestId);
+    public Task<bool> DeleteSupportRequestAsync(Guid requestId);
 }

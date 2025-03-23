@@ -16,8 +16,8 @@ public class SupportController(ISupport support) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<SupportRequestResponse>> CreateSupportRequest([FromBody] SupportRequestRequest supportRequest)
     {
-        var response     = await support.CreateSupportRequestAsync(supportRequest);
-        return Ok(response);
+        var response = await support.CreateSupportRequestAsync(supportRequest);
+        return CreatedAtAction(nameof(GetSupportRequest), new { id = response.Id }, response);
     }
 
     [HttpGet("{id:guid}")]
@@ -51,4 +51,15 @@ public class SupportController(ISupport support) : ControllerBase
         var response = await support.UpdateSupportRequestAsync(request, id);
         return Ok(response);
     }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<SupportRequestResponse>> DeleteSupportRequests(Guid id)
+    {
+        _ = await support.DeleteSupportRequestAsync(id);
+        return NoContent();
+    }
+
 }
