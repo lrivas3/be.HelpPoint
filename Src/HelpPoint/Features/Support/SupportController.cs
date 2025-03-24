@@ -1,7 +1,6 @@
 using Asp.Versioning;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
-using HelpPoint.Infrastructure.Models.Support;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Support;
