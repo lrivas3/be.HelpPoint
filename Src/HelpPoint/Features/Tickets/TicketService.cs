@@ -9,7 +9,20 @@ public class TicketService(IMapper mapper, ITicketRepository repository) : ITick
 {
     public async Task<TicketResponse> CreateTicket(TicketRequest request)
     {
-        var nuevoTicket = mapper.Map<Ticket>(request);
+        var nuevoTicket = new Ticket
+        {
+            Id = Guid.CreateVersion7(),
+            OrdenEnTablero = request.OrdenEnTablero,
+            Titulo = request.Titulo,
+            Descripcion = request.Descripcion,
+            EstadoId = request.EstadoId,
+            TipoId = request.TipoId ?? 1,
+            PrioridadId = request.PrioridadId,
+            FechaCreacion = DateTime.Now.ToUniversalTime(),
+            FechaCierre = null,
+            SupportRequestId = request.SupportRequestId,
+            CreatedByUserId = request.CreatedByUserId,
+        };
         await repository.AddAsync(nuevoTicket);
         var response = mapper.Map<TicketResponse>(nuevoTicket);
         return response;

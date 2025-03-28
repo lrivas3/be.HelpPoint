@@ -4,6 +4,7 @@ using HelpPoint.Common.Http;
 using HelpPoint.Features.Auth;
 using HelpPoint.Features.Employees;
 using HelpPoint.Features.Support;
+using HelpPoint.Features.Tickets;
 using HelpPoint.Features.Users;
 using HelpPoint.Infrastructure.Authentication;
 using HelpPoint.Infrastructure.DataBase;
@@ -38,7 +39,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IPasswordHasher, PasswordHasher>()
             .AddScoped<ITokenGenerator, TokenGenerator>()
             .AddScoped<IUserService, UserService>()
-            .AddScoped<ISupport, SupportRequestService>();
+            .AddScoped<ISupport, SupportRequestService>()
+            .AddScoped<ITicket, TicketService>();
 
         services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         services.AddHttpContextAccessor();
@@ -51,7 +53,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUserRolesRepository, UserRolesRepository>()
             .AddScoped<ISupportRequestRepository, SupportRequestRepository>()
-            .AddScoped<IEmployeeRepository, EmployeeRepository>();
+            .AddScoped<IEmployeeRepository, EmployeeRepository>()
+            .AddScoped<ITicketRepository, TicketRepository>();
         return services;
     }
 
