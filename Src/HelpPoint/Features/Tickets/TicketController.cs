@@ -19,7 +19,11 @@ public class TicketController(ITicket ticket) : ControllerBase
     [HttpGet]
     public Task<IActionResult> GetTickets() => throw new NotImplementedException();
     [HttpGet("{id:guid}")]
-    public Task<IActionResult> GetTicket(Guid id) => throw new NotImplementedException();
+    public async Task<IActionResult> GetTicket(Guid id)
+    {
+        var result = await ticket.GetTicket(id);
+        return Ok(result);
+    }
     [HttpDelete("{id:guid}")]
     public Task<IActionResult> DeleteTicket(Guid id) => throw new NotImplementedException();
     [HttpPut("{id:guid}")]
