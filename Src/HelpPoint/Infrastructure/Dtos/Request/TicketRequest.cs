@@ -13,7 +13,7 @@ public class TicketRequest
     [Required]
     public int EstadoId { get; set; }
     [Required]
-    public int? TipoId { get; set; }
+    public int TipoId { get; set; }
     [Required]
     public int PrioridadId { get; set; }
     public Guid? SupportRequestId { get; set; }

@@ -11,8 +11,6 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
 {
     public async Task<TicketResponse> CreateTicket(TicketRequest request)
     {
-        var algo = currentUserAccessor.GetRawBearerToken();
-
         var createdByUserId = Guid.Parse(currentUserAccessor.GetCurrentUserId());
         var nuevoTicket = new Ticket
         {
@@ -21,7 +19,7 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
             Titulo = request.Titulo,
             Descripcion = request.Descripcion,
             EstadoId = request.EstadoId,
-            TipoId = request.TipoId ?? 1,
+            TipoId = request.TipoId,
             PrioridadId = request.PrioridadId,
             FechaCreacion = DateTime.Now.ToUniversalTime(),
             FechaCierre = null,
