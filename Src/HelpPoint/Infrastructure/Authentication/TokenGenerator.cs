@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Features.Auth;
 using Microsoft.Extensions.Options;
@@ -12,34 +11,37 @@ public class TokenGenerator(IOptions<JwtSettings> jwtSettings) : ITokenGenerator
 {
     private readonly JwtSettings _settings = jwtSettings.Value;
 
-    public string GenerateToken(Guid userId, string userName, IEnumerable<string> roles, bool isRefresh = false)
+    public string GenerateToken(Guid userId,string userName, List<string?> roles, bool isRefreshToken = false)
     {
+        var key = Convert.FromBase64String(_settings.SecretKey);
+        var tokenHandler = new JwtSecurityTokenHandler();
+
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, userId.ToString()),        // 'sub' = subject
-            new(JwtRegisteredClaimNames.NameId, userId.ToString()),     // 'id' = user id
-            new(JwtRegisteredClaimNames.UniqueName, userName),          // 'unique_name' = username
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // identificador único del token
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            new(ClaimTypes.Name, userName)
         };
 
-        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+        roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role?.Trim() ?? string.Empty)));
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var expirationTime = isRefreshToken ? DateTime.UtcNow.AddHours(4) : DateTime.UtcNow.AddMinutes(5);
 
-        var jwt = new JwtSecurityToken(
-            issuer: _settings.Issuer,
-            audience: _settings.Audience,
-            claims: claims,
-            expires: isRefresh
-                ? DateTime.UtcNow.AddDays(7)
-                : DateTime.UtcNow.AddHours(1),
-            signingCredentials: creds
-        );
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = expirationTime,
+            IssuedAt = DateTime.UtcNow,
+            SigningCredentials =
+                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature),
+            Audience = _settings.Audience,
+            Issuer = _settings.Issuer,
+        };
 
-        return new JwtSecurityTokenHandler().WriteToken(jwt);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
-
 
     public ClaimsPrincipal? ValidateToken(string token)
     {

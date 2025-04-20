@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using HelpPoint.Infrastructure.Dtos.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Tickets;
@@ -10,6 +11,7 @@ namespace HelpPoint.Features.Tickets;
 public class TicketController(ITicket ticket) : ControllerBase
 {
     [HttpPost]
+    // [Authorize]
     public async Task<IActionResult> CreateTicket([FromBody] TicketRequest request)
     {
         var result = await ticket.CreateTicket(request);

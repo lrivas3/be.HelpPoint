@@ -40,6 +40,8 @@ app.UseVersionSet();
 app.UseCustomOpenApiViewer();
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 app.UseCors("AllowConfiguredOrigins");
 app.UseAuthentication();
 app.UseAuthorization();

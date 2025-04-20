@@ -38,8 +38,8 @@ public class AuthService(LoginValidator loginValidator,
         var rolesList = roles.Select(x => x.NormalizedName).ToList() ??
                         throw new UnauthorizedException(AppConstants.ErrorMessages.RolesNotFoundMsg);
 
-        var token        = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList);
-        var refreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList, true);
+        var token        = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList!);
+        var refreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList!, true);
 
         var response = new LoginResponse
         {
@@ -76,8 +76,8 @@ public class AuthService(LoginValidator loginValidator,
 
         var rolesList = roles.Select(x => x.NormalizedName).ToList();
 
-        var newAccessToken = tokenGenerator.GenerateToken(user.Id,user.UserName, rolesList);
-        var newRefreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList, true);
+        var newAccessToken = tokenGenerator.GenerateToken(user.Id,user.UserName, rolesList!);
+        var newRefreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList!, true);
 
         return new LoginResponse
         {
