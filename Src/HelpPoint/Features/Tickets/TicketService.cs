@@ -1,5 +1,6 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
+using HelpPoint.Features.Auth;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Ticket;
@@ -10,6 +11,8 @@ public class TicketService(IMapper mapper, ITicketRepository repository) : ITick
 {
     public async Task<TicketResponse> CreateTicket(TicketRequest request)
     {
+        // var userCode        = currentUserAccessor.GetCurrentUserId();
+        // var usuarioCreacion = repository.GetCreationUser()
         var nuevoTicket = new Ticket
         {
             Id = Guid.CreateVersion7(),

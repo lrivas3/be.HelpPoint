@@ -4,6 +4,6 @@ namespace HelpPoint.Features.Auth;
 
 public interface ITokenGenerator
 {
-    public string GenerateToken(string userName, List<string?> roles, bool isRefreshToken = false);
+    public string GenerateToken(Guid userId, string userName, IEnumerable<string> roles, bool isRefresh = false);
     public ClaimsPrincipal? ValidateToken(string token);
 }

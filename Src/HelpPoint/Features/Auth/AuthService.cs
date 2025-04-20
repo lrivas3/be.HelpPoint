@@ -35,10 +35,11 @@ public class AuthService(LoginValidator loginValidator,
             throw new NotFoundException(AppConstants.ErrorMessages.RolesNotFoundMsg);
         }
 
-        var rolesList = roles.Select(x => x?.NormalizedName).ToList();
+        var rolesList = roles.Select(x => x.NormalizedName).ToList() ??
+                        throw new UnauthorizedException(AppConstants.ErrorMessages.RolesNotFoundMsg);
 
-        var token = tokenGenerator.GenerateToken(user.UserName, rolesList);
-        var refreshToken = tokenGenerator.GenerateToken(user.UserName, rolesList, true);
+        var token        = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList);
+        var refreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList, true);
 
         var response = new LoginResponse
         {
@@ -53,11 +54,8 @@ public class AuthService(LoginValidator loginValidator,
 
     public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
     {
-        var principal = tokenGenerator.ValidateToken(refreshTokenRequest.RefreshToken);
-        if (principal == null)
-        {
-            throw new UnauthorizedException("Invalid refresh token");
-        }
+        var principal = tokenGenerator.ValidateToken(refreshTokenRequest.RefreshToken) ??
+                        throw new UnauthorizedException("Invalid refresh token");
 
         var userName = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
         if (string.IsNullOrEmpty(userName))
@@ -76,10 +74,10 @@ public class AuthService(LoginValidator loginValidator,
             throw new NotFoundException("Roles for user not found");
         }
 
-        var rolesList = roles.Select(x => x?.NormalizedName).ToList();
+        var rolesList = roles.Select(x => x.NormalizedName).ToList();
 
-        var newAccessToken = tokenGenerator.GenerateToken(user.UserName, rolesList);
-        var newRefreshToken = tokenGenerator.GenerateToken(user.UserName, rolesList, true);
+        var newAccessToken = tokenGenerator.GenerateToken(user.Id,user.UserName, rolesList);
+        var newRefreshToken = tokenGenerator.GenerateToken(user.Id, user.UserName, rolesList, true);
 
         return new LoginResponse
         {
