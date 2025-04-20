@@ -17,6 +17,7 @@ public class TokenGenerator(IOptions<JwtSettings> jwtSettings) : ITokenGenerator
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),        // 'sub' = subject
+            new(JwtRegisteredClaimNames.NameId, userId.ToString()),     // 'id' = user id
             new(JwtRegisteredClaimNames.UniqueName, userName),          // 'unique_name' = username
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // identificador único del token
         };
