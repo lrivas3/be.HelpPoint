@@ -7,12 +7,11 @@ using HelpPoint.Infrastructure.Models.Ticket;
 
 namespace HelpPoint.Features.Tickets;
 
-public class TicketService(IMapper mapper, ITicketRepository repository) : ITicket
+public class TicketService(IMapper mapper, ITicketRepository repository, ICurrentUserAccessor currentUserAccessor) : ITicket
 {
     public async Task<TicketResponse> CreateTicket(TicketRequest request)
     {
-        // var userCode        = currentUserAccessor.GetCurrentUserId();
-        // var usuarioCreacion = repository.GetCreationUser()
+        var createdByUserId = Guid.Parse(currentUserAccessor.GetCurrentUserId());
         var nuevoTicket = new Ticket
         {
             Id = Guid.CreateVersion7(),
@@ -25,7 +24,7 @@ public class TicketService(IMapper mapper, ITicketRepository repository) : ITick
             FechaCreacion = DateTime.Now.ToUniversalTime(),
             FechaCierre = null,
             SupportRequestId = request.SupportRequestId,
-            CreatedByUserId = request.CreatedByUserId,
+            CreatedByUserId = createdByUserId,
         };
         await repository.AddAsync(nuevoTicket);
         var response = mapper.Map<TicketResponse>(nuevoTicket);

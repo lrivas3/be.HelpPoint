@@ -17,6 +17,4 @@ public class TicketRequest
     [Required]
     public int PrioridadId { get; set; }
     public Guid? SupportRequestId { get; set; }
-    [Required]
-    public Guid CreatedByUserId { get; set; }
 }
