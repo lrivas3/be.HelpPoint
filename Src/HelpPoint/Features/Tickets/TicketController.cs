@@ -19,7 +19,12 @@ public class TicketController(ITicket ticket) : ControllerBase
     }
 
     [HttpGet]
-    public Task<IActionResult> GetTickets() => throw new NotImplementedException();
+    public async Task<IActionResult> GetTickets()
+    {
+        var result = await ticket.ListTicketsForKanban();
+        return Ok(result);
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetTicket(Guid id)
     {

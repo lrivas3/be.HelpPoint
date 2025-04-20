@@ -66,7 +66,12 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         return ticketResponse;
     }
 
-    public Task<List<TicketResponse?>> ListTicket(Guid id) => throw new NotImplementedException();
-
     public Task<TicketResponse> UpdateTicket(TicketUpdateRequest request) => throw new NotImplementedException();
+
+    public async Task<List<KanbanTicketResponse>> ListTicketsForKanban()
+    {
+        var result = await repository.GetAllAsync();
+        var response = mapper.Map<List<KanbanTicketResponse>>(result);
+        return response;
+    }
 }

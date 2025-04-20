@@ -8,6 +8,6 @@ public interface ITicket
 {
     public Task<TicketResponse> CreateTicket(TicketRequest request);
     public Task<TicketResponse> GetTicket(Guid id);
-    public Task<List<TicketResponse?>> ListTicket(Guid id);
+    public Task<List<KanbanTicketResponse>> ListTicketsForKanban();
     public Task<TicketResponse> UpdateTicket(TicketUpdateRequest request);
 }
