@@ -2,6 +2,7 @@
 using Asp.Versioning;
 using HelpPoint.Common.Http;
 using HelpPoint.Features.Auth;
+using HelpPoint.Features.Catalogo;
 using HelpPoint.Features.Employees;
 using HelpPoint.Features.Support;
 using HelpPoint.Features.Tickets;
@@ -40,7 +41,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<ITokenGenerator, TokenGenerator>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<ISupport, SupportRequestService>()
-            .AddScoped<ITicket, TicketService>();
+            .AddScoped<ITicket, TicketService>()
+            .AddScoped<ICatalogoService, CatalogoService>();
 
         services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         services.AddHttpContextAccessor();
@@ -54,7 +56,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUserRolesRepository, UserRolesRepository>()
             .AddScoped<ISupportRequestRepository, SupportRequestRepository>()
             .AddScoped<IEmployeeRepository, EmployeeRepository>()
-            .AddScoped<ITicketRepository, TicketRepository>();
+            .AddScoped<ITicketRepository, TicketRepository>()
+            .AddScoped<IEstadoRepository, EstadoRepository>();
         return services;
     }
 

@@ -51,8 +51,8 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         var ticketResponse = new TicketResponse
         {
             Id = ticketExistente.Id,
-            OrdenEnTablero = ticketExistente.OrdenEnTablero,
             Titulo = ticketExistente.Titulo,
+            OrdenEnTablero = ticketExistente.OrdenEnTablero,
             Descripcion = ticketExistente.Descripcion,
             Estado = estado,
             Tipo = tipo,
