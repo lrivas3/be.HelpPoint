@@ -1,6 +1,7 @@
 using AutoMapper;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Ticket;
+using HelpPoint.Infrastructure.Repositories;
 
 namespace HelpPoint.Features.Catalogo;
 

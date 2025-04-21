@@ -1,7 +1,7 @@
 using HelpPoint.Common;
 using HelpPoint.Infrastructure.Models.Ticket;
 
-namespace HelpPoint.Features.Catalogo;
+namespace HelpPoint.Infrastructure.Repositories;
 
 public interface IEstadoRepository : IRepository<Estado>
 {
