@@ -16,4 +16,7 @@ public class KanbanTicketResponse
     public string? Checklist { get; set; }
     public int? Attachments { get; set; }
     public List<string> Avatars { get; set; } = [];
+    public string? SupportRequestId { get; set; } = string.Empty;
+    public UserLookUpResponse CreatedBy { get; set; } = null!;
+    public List<CommentResponse>? Comments { get; set; }
 }

@@ -13,7 +13,7 @@ public class TicketResponse
     public DateTime? FechaCierre { get; set; }
     public Guid? SupportRequestId { get; set; }
     public UserLookUpResponse CreatedBy { get; set; } = null!;
-    public List<ComentResponse?> Comments { get; set; } = null!;
+    public List<CommentResponse?> Comments { get; set; } = null!;
 }
 
 public class UserLookUpResponse
@@ -28,7 +28,7 @@ public class LookUpResponse
     public string Nombre { get; set; } = null!;
 }
 
-public class ComentResponse
+public class CommentResponse
 {
     public Guid Id { get; set; }
     public UserLookUpResponse User { get; set; } = null!;
