@@ -10,4 +10,5 @@ public interface ITicketRepository : IRepository<Ticket>
     public Task<LookUpResponse?> GetTipo(int id);
     public Task<LookUpResponse?> GetPrioridad(int id);
     public Task<UserLookUpResponse?> GetCreationUser(Guid id);
+    public Task<List<KanbanTicketResponse>?> ListTickets();
 };

@@ -70,8 +70,7 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
 
     public async Task<List<KanbanTicketResponse>> ListTicketsForKanban()
     {
-        var result = await repository.GetAllAsync();
-        var response = mapper.Map<List<KanbanTicketResponse>>(result);
-        return response;
+        var result = await repository.ListTickets() ?? throw new NotFoundException("No se encontraron tickets");
+        return result;
     }
 }
