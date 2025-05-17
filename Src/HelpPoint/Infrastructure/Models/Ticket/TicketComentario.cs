@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using HelpPoint.Infrastructure.Models.Users;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
-[Table("TicketComments", Schema = "Ticket")]
+[Table("TicketComentarios", Schema = "Ticket")]
 public class TicketComentario
 {
     [Key]
