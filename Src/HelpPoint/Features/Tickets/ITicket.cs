@@ -9,4 +9,5 @@ public interface ITicket
     public Task<TicketResponse> GetTicket(Guid id);
     public Task<List<KanbanTicketResponse>> ListTicketsForKanban();
     public Task<TicketResponse> UpdateTicket(Guid id, TicketUpdateRequest request);
+    public Task<CommentResponse> AddCommentAsync(Guid ticketId, TicketCommentRequest request);
 }

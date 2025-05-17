@@ -11,4 +11,6 @@ public interface ITicketRepository : IRepository<Ticket>
     public Task<LookUpResponse?> GetPrioridad(int id);
     public Task<UserLookUpResponse?> GetCreationUser(Guid id);
     public Task<List<KanbanTicketResponse>?> ListTickets();
+    public Task AddCommentAsync(TicketComentario comment);
+    public Task<List<TicketComentario>> ListCommentsByTicketIdAsync(Guid ticketId);
 };

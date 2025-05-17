@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HelpPoint.Infrastructure.Models.Users;
 
 namespace HelpPoint.Infrastructure.Models.Ticket;
-[Table("TicketComentarios", Schema = "Ticket")]
+[Table("TicketComments", Schema = "Ticket")]
 public class TicketComentario
 {
     [Key]
@@ -22,6 +23,9 @@ public class TicketComentario
     [Required]
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
-    [ForeignKey("TicketId")]
+    [ForeignKey(nameof(TicketId))]
     public Ticket Ticket { get; set; } = null!;
+
+    [ForeignKey(nameof(UserId))]
+    public User User { get; set; } = null!;
 }

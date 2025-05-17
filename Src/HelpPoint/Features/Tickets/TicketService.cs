@@ -112,4 +112,33 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
             CreatedBy = createdBy
         };
     }
+
+    public async Task<CommentResponse> AddCommentAsync(Guid ticketId, TicketCommentRequest request)
+    {
+        _ = await repository.GetByIdAsync(ticketId)
+            ?? throw new NotFoundException("No se encontró el ticket");
+
+        var userId = Guid.Parse(currentUserAccessor.GetCurrentUserId());
+        var comment = new TicketComentario
+        {
+            Id = Guid.NewGuid(),
+            TicketId = ticketId,
+            UserId = userId,
+            Comentario = request.Comentario,
+            FechaCreacion = DateTime.UtcNow
+        };
+
+        await repository.AddCommentAsync(comment);
+
+        var userLookup = await repository.GetCreationUser(userId)
+                         ?? throw new NotFoundException("No se encontró el usuario");
+
+        return new CommentResponse
+        {
+            Id = comment.Id,
+            Comentario = comment.Comentario,
+            FechaCreacion = comment.FechaCreacion,
+            User = userLookup
+        };
+    }
 }

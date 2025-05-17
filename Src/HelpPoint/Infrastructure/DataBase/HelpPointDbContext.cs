@@ -16,7 +16,7 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
     public DbSet<Ticket> Tickets { get; set; } = null!;
     public DbSet<TicketAsignacion> TicketAsignaciones { get; set; } = null!;
     public DbSet<TicketHistorial> TicketHistorial { get; set; } = null!;
-    public DbSet<TicketComentario> TicketComentarios { get; set; } = null!;
+    public DbSet<TicketComentario> TicketComments { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<TicketTag> TicketTags { get; set; } = null!;
     public DbSet<Notificacion> Notifications { get; set; } = null!;

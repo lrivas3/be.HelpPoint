@@ -52,7 +52,7 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
             CreatedBy = context.Users.Where(u => u.Id == x.CreatedByUserId)
                 .Select(u => new UserLookUpResponse { CreatedByUserId = u.Id, CreatedByUserName = u.Name })
                 .FirstOrDefault()!,
-            Comments = context.TicketComentarios.Where(c => c.TicketId == x.Id).Select(c => new CommentResponse
+            Comments = context.TicketComments.Where(c => c.TicketId == x.Id).Select(c => new CommentResponse
             {
                 Id = c.Id,
                 User = context.Users.Where(u => u.Id == c.UserId)
@@ -64,4 +64,16 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
                 .OrderByDescending(c => c.FechaCreacion)
                 .ToList()
         }).ToListAsync();
+
+
+    public async Task AddCommentAsync(TicketComentario comment)
+    {
+        _ = context.TicketComments.Add(comment);
+        _ = await context.SaveChangesAsync();
+    }
+
+    public async Task<List<TicketComentario>> ListCommentsByTicketIdAsync(Guid ticketId) =>
+        await context.TicketComments
+            .Where(c => c.TicketId == ticketId)
+            .ToListAsync();
 }

@@ -40,6 +40,16 @@ public class TicketController(ITicket ticket) : ControllerBase
         var updated = await ticket.UpdateTicket(id, request);
         return Ok(updated);
     }
+
     [HttpPost("{id:guid}/comments")]
-    public Task<IActionResult> AddTicketComment([FromBody] TicketCommentRequest request, Guid id) => throw new NotImplementedException();
+    public async Task<IActionResult> AddTicketComment(Guid id, [FromBody] TicketCommentRequest request)
+    {
+        var comment = await ticket.AddCommentAsync(id, request);
+        // 201 Created with the new comment in the body
+        return CreatedAtAction(
+            nameof(AddTicketComment),
+            new { id, commentId = comment.Id },
+            comment
+        );
+    }
 }
