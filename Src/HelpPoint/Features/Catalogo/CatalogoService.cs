@@ -14,4 +14,10 @@ public class CatalogoService(IEstadoRepository estadoRepository) : ICatalogoServ
         var estados = await _estadoRepository.GetAllEstadosAsync();
         return [.. estados.Select(e => new PSelectableResponse { Label = e.NombreEstado, Value = e.Id })];
     }
+
+    public async Task<List<PSelectableResponse>> GetPrioridades()
+    {
+        var prioridades = await _estadoRepository.GetAllPrioridadesAsync();
+        return [.. prioridades.Select(e => new PSelectableResponse { Label = e.Nombre, Value = e.Id })];
+    }
 }

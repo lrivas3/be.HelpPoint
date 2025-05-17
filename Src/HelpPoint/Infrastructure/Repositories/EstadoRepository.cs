@@ -11,4 +11,6 @@ public class EstadoRepository(HelpPointDbContext context) : Repository<Estado>(c
     {
         return await context.TicketEstados.ToListAsync();
     }
+
+    public async Task<List<Prioridad>> GetAllPrioridadesAsync() => await context.Prioridades.ToListAsync();
 }

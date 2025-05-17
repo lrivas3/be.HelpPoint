@@ -17,4 +17,11 @@ public class CatalogoController(ICatalogoService catalogoService) : ControllerBa
         var estados = await _catalogoService.GetEstados();
         return Ok(estados);
     }
+
+    [HttpGet("prioridades")]
+    public async Task<ActionResult<List<PSelectableResponse>>> GetPrioridades()
+    {
+        var estados = await _catalogoService.GetPrioridades();
+        return Ok(estados);
+    }
 }
