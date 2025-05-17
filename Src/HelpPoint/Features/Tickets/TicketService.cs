@@ -66,11 +66,50 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         return ticketResponse;
     }
 
-    public Task<TicketResponse> UpdateTicket(TicketUpdateRequest request) => throw new NotImplementedException();
-
     public async Task<List<KanbanTicketResponse>> ListTicketsForKanban()
     {
         var result = await repository.ListTickets() ?? throw new NotFoundException("No se encontraron tickets");
         return result;
+    }
+
+    public async Task<TicketResponse> UpdateTicket(Guid id, TicketUpdateRequest updateRequest)
+    {
+        var ticket = await repository.GetByIdAsync(id)
+                     ?? throw new NotFoundException("No se encontró el ticket");
+
+        ticket.OrdenEnTablero = updateRequest.OrdenEnTablero;
+        ticket.Titulo = updateRequest.Titulo;
+        ticket.Descripcion = updateRequest.Descripcion;
+        ticket.EstadoId = updateRequest.EstadoId;
+        ticket.TipoId = updateRequest.TipoId;
+        ticket.PrioridadId = updateRequest.PrioridadId;
+        ticket.FechaCierre = updateRequest.FechaCierre;
+        ticket.SupportRequestId = updateRequest.SupportRequestId;
+
+        await repository.UpdateAsync(ticket);
+
+        var estado = await repository.GetEstado(ticket.EstadoId)
+                     ?? throw new NotFoundException("Estado no encontrado");
+        var tipo = await repository.GetTipo(ticket.TipoId)
+                   ?? throw new NotFoundException("Tipo no encontrado");
+        var prioridad = await repository.GetPrioridad(ticket.PrioridadId)
+                        ?? throw new NotFoundException("Prioridad no encontrada");
+        var createdBy = await repository.GetCreationUser(ticket.CreatedByUserId)
+                        ?? throw new NotFoundException("Usuario creador no encontrado");
+
+        return new TicketResponse
+        {
+            Id = ticket.Id,
+            Titulo = ticket.Titulo,
+            OrdenEnTablero = ticket.OrdenEnTablero,
+            Descripcion = ticket.Descripcion,
+            Estado = estado,
+            Tipo = tipo,
+            Prioridad = prioridad,
+            FechaCreacion = ticket.FechaCreacion,
+            FechaCierre = ticket.FechaCierre,
+            SupportRequestId = ticket.SupportRequestId,
+            CreatedBy = createdBy
+        };
     }
 }

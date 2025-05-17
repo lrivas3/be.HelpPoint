@@ -33,8 +33,13 @@ public class TicketController(ITicket ticket) : ControllerBase
     }
     [HttpDelete("{id:guid}")]
     public Task<IActionResult> DeleteTicket(Guid id) => throw new NotImplementedException();
+
     [HttpPut("{id:guid}")]
-    public Task<IActionResult> UpdateTicket([FromBody] TicketUpdateRequest updateRequest,Guid id) => throw new NotImplementedException();
+    public async Task<IActionResult> UpdateTicket(Guid id, [FromBody] TicketUpdateRequest request)
+    {
+        var updated = await ticket.UpdateTicket(id, request);
+        return Ok(updated);
+    }
     [HttpPost("{id:guid}/comments")]
     public Task<IActionResult> AddTicketComment([FromBody] TicketCommentRequest request, Guid id) => throw new NotImplementedException();
 }

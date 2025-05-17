@@ -1,7 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using HelpPoint.Infrastructure.Models.Support;
-using HelpPoint.Infrastructure.Models.Ticket;
 
 namespace HelpPoint.Infrastructure.Dtos.Request;
 
