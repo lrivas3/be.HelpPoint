@@ -1,4 +1,3 @@
-using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Features.Tickets;
 using HelpPoint.Infrastructure.DataBase;
 using HelpPoint.Infrastructure.Dtos.Response;
@@ -48,7 +47,7 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
             Checklist = null,
             Attachments = null,
             Avatars = new List<string>(),
-            SupportRequestId = x.SupportRequestId.ToString() ?? null,
+            SupportRequestId = x.SupportRequestId ?? null,
             CreatedBy = context.Users.Where(u => u.Id == x.CreatedByUserId)
                 .Select(u => new UserLookUpResponse { CreatedByUserId = u.Id, CreatedByUserName = u.Name })
                 .FirstOrDefault()!,
