@@ -4,7 +4,7 @@ namespace HelpPoint.Common.Errors.Exceptions;
 
 public class HelpPointValidationException : Exception
 {
-    public int StatusCode { get; } = 400;
+    public int StatusCode => 400;
     public Dictionary<string, string[]> Errors { get; }
 
     public HelpPointValidationException(ValidationResult validationResult)

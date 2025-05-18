@@ -48,7 +48,7 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
             Checklist = null,
             Attachments = null,
             Avatars = new List<string>(),
-            SupportRequestId = x.SupportRequestId.ToString() ?? string.Empty,
+            SupportRequestId = x.SupportRequestId.ToString() ?? null,
             CreatedBy = context.Users.Where(u => u.Id == x.CreatedByUserId)
                 .Select(u => new UserLookUpResponse { CreatedByUserId = u.Id, CreatedByUserName = u.Name })
                 .FirstOrDefault()!,

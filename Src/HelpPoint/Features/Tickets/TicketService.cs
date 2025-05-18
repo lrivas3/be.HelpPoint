@@ -72,19 +72,19 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         return result;
     }
 
-    public async Task<TicketResponse> UpdateTicket(Guid id, TicketUpdateRequest updateRequest)
+    public async Task<TicketResponse> UpdateTicket(Guid id, TicketUpdateRequest request)
     {
         var ticket = await repository.GetByIdAsync(id)
                      ?? throw new NotFoundException("No se encontró el ticket");
 
-        ticket.OrdenEnTablero = updateRequest.OrdenEnTablero;
-        ticket.Titulo = updateRequest.Titulo;
-        ticket.Descripcion = updateRequest.Descripcion;
-        ticket.EstadoId = updateRequest.EstadoId;
-        ticket.TipoId = updateRequest.TipoId;
-        ticket.PrioridadId = updateRequest.PrioridadId;
-        ticket.FechaCierre = updateRequest.FechaCierre;
-        ticket.SupportRequestId = updateRequest.SupportRequestId;
+        ticket.OrdenEnTablero = request.OrdenEnTablero;
+        ticket.Titulo = request.Titulo;
+        ticket.Descripcion = request.Descripcion;
+        ticket.EstadoId = request.EstadoId;
+        ticket.TipoId = request.TipoId;
+        ticket.PrioridadId = request.PrioridadId;
+        ticket.FechaCierre = request.FechaCierre;
+        ticket.SupportRequestId = request.SupportRequestId;
 
         await repository.UpdateAsync(ticket);
 
