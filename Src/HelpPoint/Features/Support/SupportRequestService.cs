@@ -1,6 +1,8 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
+using HelpPoint.Features.Emails;
 using HelpPoint.Features.Employees;
+using HelpPoint.Infrastructure.Dtos.Email;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Support;
@@ -10,7 +12,7 @@ namespace HelpPoint.Features.Support;
 public class SupportRequestService(
     ISupportRequestRepository supportRequestRepository,
     IEmployeeRepository employeeRepository,
-    IMapper mapper)
+    IMapper mapper, IEmailService emailService)
     : ISupport
 {
 
@@ -22,6 +24,16 @@ public class SupportRequestService(
         var nuevaRequest = mapper.Map<SupportRequest>(request);
         var nuevaSolicitud = await supportRequestRepository.CreateSupportRequestAsync(nuevaRequest);
         var response = mapper.Map<SupportRequestResponse>(nuevaSolicitud);
+
+        var dto = new EmailDto
+        {
+            To      = request.Email,
+            Subject = "Solicitud Recibida",
+            HtmlBody = (await File.ReadAllTextAsync("Templates/SupportConfirmation.html"))
+                .Replace("{{SolicitudId}}", nuevaSolicitud?.Id.ToString())
+                .Replace("{{EmployeeName}}", nuevaSolicitud?.Empleado?.Nombre)
+        };
+        _ = await emailService.SendEmailAsync(dto);
         return response;
     }
 
@@ -39,7 +51,7 @@ public class SupportRequestService(
     public async Task<SupportRequestResponse> GetSupportRequestAsync(Guid requestId)
     {
         var supportRequest = await supportRequestRepository.GetByIdAsync(requestId) ??
-                             throw new NotFoundException("No se encontro la solicitud de soporte");
+                             throw new NotFoundException("No se encontró la solicitud de soporte");
 
         var response = mapper.Map<SupportRequestResponse>(supportRequest);
 

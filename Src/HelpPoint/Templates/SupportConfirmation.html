@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Solicitud de Soporte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1pt solid #18181b;
+        }
+
+        .header img {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: auto;
+        }
+
+        .green-bar {
+            background-color: #10b981;
+            height: 8px;
+        }
+
+        .dark-header-bar {
+            margin: 0;
+            padding: 0;
+            background-color: #18181b;
+        }
+
+        .dark-header-content {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .content {
+            padding: 18px;
+            color: #2c2a29;
+            font-size: 14px;
+            line-height: 25px;
+        }
+
+        .content p {
+            margin: 30px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 16px 15px 16px 30px;
+            font-size: 14px;
+            color: #2c2a29;
+            line-height: 22px;
+        }
+
+        .footer img {
+            height: 65px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #666;
+            margin: 40px 0;
+            text-align: justify;
+        }
+
+        hr {
+            border: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Logo Header -->
+    <div class="header">
+        <img style="padding:0; margin: 0" src="{{headerImage}}" alt="HelpPoint Logo">
+    </div>
+
+    <!-- Accent Bars -->
+    <div class="green-bar"></div>
+    <div class="dark-header-bar">
+        <div class="content">
+            <p style="color: #ffffff; font-size: 18px; margin: 12px 0;">
+                Confirmación de Solicitud de Soporte
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <p>Estimado/a <span style="font-weight:700">{{EmployeeName}}</span>,</p>
+        <p>
+            Hemos recibido tu solicitud de soporte con el identificador
+            <span style="font-weight:700">{{SolicitudId}}</span>.
+            Nuestro equipo de HelpPoint la está revisando y se pondrá en contacto contigo lo antes posible.
+        </p>
+        <p>
+            Si necesitas más información, no dudes en responder a este correo o visitar
+            nuestro <a href="https://helppoint.app/soporte">portal de soporte</a>.
+        </p>
+        <p>Muchas gracias por confiar en HelpPoint.</p>
+        <center>
+            <img src="{{logo}}" alt="HelpPoint Logo">
+        </center>
+        <p style="text-align:center;font-weight:700">Mensaje automático, por favor no responder.</p>
+    </div>
+
+    <!-- Footer Disclaimer -->
+    <div class="footer">
+        <p>
+            <b>NOTA CONFIDENCIAL:</b> La información contenida en este correo electrónico es confidencial y solo puede
+            ser utilizada por la persona, entidad o compañía a la cual está dirigido. Si no eres el destinatario
+            autorizado, cualquier retención, difusión, distribución o copia total o parcial de este mensaje está
+            prohibida. Si recibes este correo por error, por favor elimínalo inmediatamente.
+        </p>
+        <hr>
+        <p>
+            Para asistencia adicional, contáctanos al teléfono: <span style="font-weight:700">+1 (800) 555-1234</span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

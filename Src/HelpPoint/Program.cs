@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddFeaturesDependencyInjection()
+    .AddEmailConfiguration(configuration: builder.Configuration)
     .AddRepositories()
     .AddApplicationDbContext(builder.Configuration)
     .AddJwtAuthentication(builder.Configuration)

@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Asp.Versioning;
 using HelpPoint.Common.Http;
+using HelpPoint.Config;
 using HelpPoint.Features.Auth;
 using HelpPoint.Features.Catalogo;
+using HelpPoint.Features.Emails;
 using HelpPoint.Features.Employees;
 using HelpPoint.Features.Support;
 using HelpPoint.Features.Tickets;
@@ -33,6 +35,28 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+
+    public static IServiceCollection AddEmailConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        _ = services.Configure<EmailSettings>(options =>
+        {
+            options.Host = configuration["Email:Host"] ??
+                           throw new InvalidOperationException("Configuracion de correo fallida: Host no configurado");
+            options.Port = int.Parse(configuration["Email:Port"] ??
+                                     throw new InvalidOperationException(
+                                         "Configuracion de correo fallida: Port no configurado"));
+            options.UserName = configuration["Email:UserName"] ??
+                               throw new InvalidOperationException(
+                                   "Configuracion de correo fallida: User no configurado");
+            options.PassWord = configuration["Email:Password"] ??
+                               throw new InvalidOperationException(
+                                   "Configuracion de correo fallida: Pass no configurado");
+            options.TimeOut = int.Parse(configuration["Email:TimeOut"] ?? "5000");
+        });
+        return services;
+    }
+
     public static IServiceCollection AddFeaturesDependencyInjection(this IServiceCollection services)
     {
         _ = services.AddScoped<IAuth, AuthService>()
@@ -42,7 +66,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUserService, UserService>()
             .AddScoped<ISupport, SupportRequestService>()
             .AddScoped<ITicket, TicketService>()
-            .AddScoped<ICatalogoService, CatalogoService>();
+            .AddScoped<ICatalogoService, CatalogoService>()
+            .AddScoped<IEmailService, EmailService>();
 
         services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         services.AddHttpContextAccessor();
