@@ -15,6 +15,8 @@ public static class AppConfigConstants
         public const string SupportStaff           = "SupportStaff";
         public const string SupportStaffNormalized = "SUPPORTSTAFF";
         public static readonly Guid SupportStaffId = Guid.Parse("01956042-3344-7a85-8117-020290a145f9");
+
     }
+    public static readonly int CODIGO_SP_REQUEST_RECHAZADA = 3;
 
 }

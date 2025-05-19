@@ -1,5 +1,6 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
+using HelpPoint.Config;
 using HelpPoint.Features.Emails;
 using HelpPoint.Features.Employees;
 using HelpPoint.Infrastructure.Dtos.Email;
@@ -69,7 +70,8 @@ public class SupportRequestService(
     {
         var existingRequest = await supportRequestRepository.GetByIdAsync(requestId) ??
                             throw new NotFoundException("No se encontró la solicitud");
-        await supportRequestRepository.DeleteAsync(existingRequest);
+        existingRequest.EstadoId = AppConfigConstants.CODIGO_SP_REQUEST_RECHAZADA;
+        await supportRequestRepository.UpdateAsync(existingRequest);
         return true;
     }
 }
