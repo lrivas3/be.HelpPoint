@@ -13,4 +13,5 @@ public interface ITicketRepository : IRepository<Ticket>
     public Task<List<KanbanTicketResponse>?> ListTickets();
     public Task AddCommentAsync(TicketComentario comment);
     public Task<List<TicketComentario>> ListCommentsByTicketIdAsync(Guid ticketId);
-};
+    public Task<List<Ticket>?> GetManyByIdsAsync(IEnumerable<Guid> ids);
+}

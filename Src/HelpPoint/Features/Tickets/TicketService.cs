@@ -141,4 +141,32 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
             User = userLookup
         };
     }
+
+    public async Task ReorderTicketsAsync(IEnumerable<ReorderTicketDto> reorderDto)
+    {
+        // 1) Materialize once
+        var dtos = reorderDto.ToList();
+        if (dtos.Count == 0)
+        {
+            throw new BadRequestCustomException("Se requiere al menos un ticket para reordenar.");
+        }
+
+        // 2) Extract IDs
+        var ids = dtos.Select(d => Guid.Parse(d.TicketId)).ToList();
+
+        // 3) Load all tickets in one go
+        var tickets = await repository.GetManyByIdsAsync(ids)
+                      ?? throw new NotFoundException("No se encontraron los tickets solicitados.");
+
+        // 4) Apply updates
+        foreach (var dto in dtos)
+        {
+            var ticket = tickets.FirstOrDefault(t => t.Id == Guid.Parse(dto.TicketId))
+                         ?? throw new NotFoundException($"Ticket {dto.TicketId} no encontrado");
+
+            ticket.EstadoId       = dto.EstadoId;
+            ticket.OrdenEnTablero = dto.OrdenEnTablero;
+            await repository.UpdateAsync(ticket);
+        }
+    }
 }

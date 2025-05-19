@@ -52,4 +52,16 @@ public class TicketController(ITicket ticket) : ControllerBase
             comment
         );
     }
+
+    [HttpPut("reorder")]
+    public async Task<IActionResult> ReorderTickets([FromBody] ReorderPayload payload)
+    {
+        if (payload.Tickets.Count == 0)
+        {
+            return BadRequest("Se requiere al menos un ticket para reordenar.");
+        }
+
+        await ticket.ReorderTicketsAsync(payload.Tickets);
+        return NoContent();
+    }
 }

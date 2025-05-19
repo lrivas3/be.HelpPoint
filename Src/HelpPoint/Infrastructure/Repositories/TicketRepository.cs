@@ -75,4 +75,9 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
         await context.TicketComments
             .Where(c => c.TicketId == ticketId)
             .ToListAsync();
+
+    public async Task<List<Ticket>?> GetManyByIdsAsync(IEnumerable<Guid> ids) =>
+        await context.Tickets
+            .Where(t => ids.Contains(t.Id))
+            .ToListAsync();
 }
