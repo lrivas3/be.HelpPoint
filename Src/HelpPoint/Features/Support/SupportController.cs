@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +9,18 @@ namespace HelpPoint.Features.Support;
 [ApiController]
 [Route("api/v{version:apiVersion}/supports")]
 [ApiVersion("1.0")]
-public class SupportController(ISupport support) : ControllerBase
+public class SupportController(ISupport support, IRecaptchaService recaptchaService) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<SupportRequestResponse>> CreateSupportRequest([FromBody] SupportRequestRequest supportRequest)
     {
+        if (!await recaptchaService.ValidateAsync(supportRequest.TokenVerificacion))
+        {
+            throw new BadRequestCustomException("Captcha inválido, inténtalo de nuevo.");
+        }
+
         var response = await support.CreateSupportRequestAsync(supportRequest);
         return CreatedAtAction(nameof(GetSupportRequest), new { id = response.Id }, response);
     }

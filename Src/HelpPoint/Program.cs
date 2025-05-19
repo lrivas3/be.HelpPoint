@@ -1,5 +1,6 @@
 using HelpPoint.Common.DependencyInjection;
 using HelpPoint.Common.RequestPipeline;
+using HelpPoint.Features.Support;
 using HelpPoint.Infrastructure.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddControllers();
 // builder.Services.AddSingleton<ProblemDetailsFactory, HelpPointProblemDetailsFactory>();
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
+builder.Services.AddHttpClient<IRecaptchaService, RecaptchaService>();
 
 builder.Services.AddCors(options =>
  {

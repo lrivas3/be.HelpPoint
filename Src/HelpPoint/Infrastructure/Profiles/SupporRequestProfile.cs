@@ -10,7 +10,8 @@ public class SupporRequestProfile : Profile
     public SupporRequestProfile() =>
         CreateMap<SupportRequestRequest, SupportRequest>(MemberList.None)
             .ForMember(dest => dest.Titulo,
-                src => src.MapFrom(request => request.Descripcion.Substring(0, 10)))
+                       opt => opt.MapFrom(src =>
+                           $"Soporte de {src.Email} – {DateTime.UtcNow:yyyy-MM-dd}"))
             .ForMember(dest => dest.Descripcion,
                 src => src.MapFrom(request => request.Descripcion))
             // Id de empleado se obtiene antes de mapeo

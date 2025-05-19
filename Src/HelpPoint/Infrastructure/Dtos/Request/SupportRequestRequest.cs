@@ -10,6 +10,7 @@ public class SupportRequestRequest
     public Guid? EmpleadoId { get; set; }
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
+    public string TokenVerificacion { get; set; } = null!;
 }
 
 public class SupportRequestUpdateRequest
