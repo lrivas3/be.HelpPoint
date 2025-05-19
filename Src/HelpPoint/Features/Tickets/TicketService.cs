@@ -175,4 +175,11 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
             await repository.UpdateAsync(ticket);
         }
     }
+
+    public async Task DeleteTicket(Guid id)
+    {
+        var ticket = await repository.GetByIdAsync(id) ?? throw new NotFoundException("Ticket no encontrado");
+
+        await repository.DeleteAsync(ticket);
+    }
 }

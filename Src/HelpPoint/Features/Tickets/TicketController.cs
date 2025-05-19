@@ -31,8 +31,13 @@ public class TicketController(ITicket ticket) : ControllerBase
         var result = await ticket.GetTicket(id);
         return Ok(result);
     }
+
     [HttpDelete("{id:guid}")]
-    public Task<IActionResult> DeleteTicket(Guid id) => throw new NotImplementedException();
+    public async Task<IActionResult> DeleteTicket(Guid id)
+    {
+        await ticket.DeleteTicket(id);
+        return NoContent();
+    }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateTicket(Guid id, [FromBody] TicketUpdateRequest request)

@@ -10,5 +10,6 @@ public interface ITicket
     public Task<List<KanbanTicketResponse>> ListTicketsForKanban();
     public Task<TicketResponse>             UpdateTicket(Guid id, TicketUpdateRequest request);
     public Task<CommentResponse>            AddCommentAsync(Guid ticketId, TicketCommentRequest request);
-    public Task ReorderTicketsAsync(IEnumerable<ReorderTicketDto> reorderDto);
+    public Task                             ReorderTicketsAsync(IEnumerable<ReorderTicketDto> reorderDto);
+    public Task                                  DeleteTicket(Guid id);
 }
