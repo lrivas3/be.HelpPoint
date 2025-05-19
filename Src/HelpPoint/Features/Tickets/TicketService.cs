@@ -1,34 +1,40 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Features.Auth;
+using HelpPoint.Features.Support;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Ticket;
 
 namespace HelpPoint.Features.Tickets;
 
-public class TicketService(IMapper mapper, ITicketRepository repository, ICurrentUserAccessor currentUserAccessor) : ITicket
+public class TicketService(IMapper mapper, ITicketRepository repository, ICurrentUserAccessor currentUserAccessor, ISupportRequestRepository supportRequestRepository) : ITicket
 {
+    private const int ESTADO_SOLICITUD_APROBADA = 2;
+
     public async Task<TicketResponse> CreateTicket(TicketRequest request)
     {
         var createdByUserId = Guid.Parse(currentUserAccessor.GetCurrentUserId());
-        var nuevoTicket = new Ticket
+
+        if (request.SupportRequestId is { } srId)
         {
-            Id = Guid.CreateVersion7(),
-            OrdenEnTablero = request.OrdenEnTablero,
-            Titulo = request.Titulo,
-            Descripcion = request.Descripcion,
-            EstadoId = request.EstadoId,
-            TipoId = request.TipoId,
-            PrioridadId = request.PrioridadId,
-            FechaCreacion = DateTime.Now.ToUniversalTime(),
-            FechaCierre = null,
-            SupportRequestId = request.SupportRequestId,
-            CreatedByUserId = createdByUserId,
-        };
-        await repository.AddAsync(nuevoTicket);
-        var response = mapper.Map<TicketResponse>(nuevoTicket);
-        return response;
+            var supportRequest = await supportRequestRepository
+                                     .GetByIdAsync(srId)
+                                 ?? throw new NotFoundException($"Solicitud de soporte {srId} no encontrada.");
+
+            supportRequest.EstadoId = ESTADO_SOLICITUD_APROBADA;
+            await supportRequestRepository.UpdateAsync(supportRequest);
+        }
+
+        var ticket = mapper.Map<Ticket>(request);
+        ticket.Id              = Guid.CreateVersion7();
+        ticket.CreatedByUserId = createdByUserId;
+        ticket.FechaCreacion   = DateTime.UtcNow;
+        ticket.FechaCierre     = null;
+
+        await repository.AddAsync(ticket);
+
+        return mapper.Map<TicketResponse>(ticket);
     }
 
     public async Task<TicketResponse> GetTicket(Guid id)

@@ -4,7 +4,6 @@ using HelpPoint.Features.Employees;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Support;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace HelpPoint.Features.Support;
 
@@ -49,7 +48,7 @@ public class SupportRequestService(
 
     public async Task<List<SupportRequestResponse>> ListSupportRequestsAsync()
     {
-        var supRequests = await supportRequestRepository.GetAllAsync();
+        var supRequests = await supportRequestRepository.GetAllPendingAsync();
         var response = mapper.Map<List<SupportRequestResponse>>(supRequests);
         return response;
     }
