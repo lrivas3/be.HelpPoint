@@ -80,4 +80,20 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
         await context.Tickets
             .Where(t => ids.Contains(t.Id))
             .ToListAsync();
+
+    public async Task<bool> AssignUsers(List<string> requestUsers, string requestTicketId)
+    {
+        var asignaciones = requestUsers.Select(requestUser => new TicketAsignacion
+        {
+            Id = Guid.CreateVersion7(),
+            TicketId = Guid.Parse(requestTicketId),
+            UserId = Guid.Parse(requestUser),
+            FechaAsignacion = DateTime.UtcNow,
+            FechaFin = null,
+            TiempoEmpleadoMinutos = 0
+        })
+            .ToList();
+        await context.TicketAsignaciones.AddRangeAsync(asignaciones);
+        return await context.SaveChangesAsync() == requestUsers.Count;
+    }
 }

@@ -1,6 +1,5 @@
 using Asp.Versioning;
 using HelpPoint.Infrastructure.Dtos.Request;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpPoint.Features.Tickets;
@@ -68,5 +67,12 @@ public class TicketController(ITicket ticket) : ControllerBase
 
         await ticket.ReorderTicketsAsync(payload.Tickets);
         return NoContent();
+    }
+
+    [HttpPost("assign")]
+    public async Task<IActionResult> AssignUsersAsync([FromBody] AssignUsersRequest request)
+    {
+        var result = await ticket.AssignUsers(request);
+        return Ok(result);
     }
 }

@@ -182,4 +182,6 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
 
         await repository.DeleteAsync(ticket);
     }
+
+    public async Task<bool> AssignUsers(AssignUsersRequest request) => await repository.AssignUsers(request.Users, request.TicketId);
 }
