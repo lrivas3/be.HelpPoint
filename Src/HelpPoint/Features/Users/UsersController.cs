@@ -19,9 +19,16 @@ public class UsersController(IUserService userService) : ControllerBase
 
     [Authorize]
     [HttpGet("profile")]
-    public async Task<IActionResult> GetuserProfile()
+    public async Task<IActionResult> GetUserProfile()
     {
         var user = await userService.GetUserProfile();
         return Ok(user);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ListUsers()
+    {
+        var result = await userService.ListUsers();
+        return Ok(result);
     }
 }

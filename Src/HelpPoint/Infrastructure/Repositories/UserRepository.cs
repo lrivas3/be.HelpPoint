@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HelpPoint.Infrastructure.Repositories;
 
-public class UserRepository(HelpPointDbContext context) : IUserRepository
+public class UserRepository(HelpPointDbContext context) : Repository<User>(context), IUserRepository
 {
     public Task<bool> UserExists(string username) => context.Users.AnyAsync(x=> x.UserName == username);
 
@@ -24,7 +24,7 @@ public class UserRepository(HelpPointDbContext context) : IUserRepository
             .AsNoTracking()
             .ToListAsync();
 
-    public async Task<User> AddAsync(User user)
+    public async Task<User> CustomAddAsync(User user)
     {
         await context.Users.AddAsync(user);
         await context.SaveChangesAsync();

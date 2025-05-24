@@ -1,6 +1,7 @@
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Config;
 using HelpPoint.Features.Auth;
+using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Models.Users;
 
@@ -40,7 +41,7 @@ public class UserService(IUserRepository userRepository,
             ManagerId = null
         };
 
-        await userRepository.AddAsync(newUser);
+        await userRepository.CustomAddAsync(newUser);
 
         var newUserRole = new UserRoles
         {
@@ -54,11 +55,11 @@ public class UserService(IUserRepository userRepository,
 
     public async Task<UserProfileResponse> GetUserProfile()
     {
-        var currentuser = currentUserAccessor.GetCurrentUsername();
-        var user = await userRepository.GetUserByUserNameAsync(currentuser);
+        var currentUser = currentUserAccessor.GetCurrentUsername();
+        var user = await userRepository.GetUserByUserNameAsync(currentUser);
         if (user == null)
         {
-            throw new NotFoundException("Usuario no encontrado: "+ currentuser);
+            throw new NotFoundException("Usuario no encontrado: "+ currentUser);
         }
 
         var userRoles = await userRepository.GetRolesByIdAsync(user.Id);
@@ -76,18 +77,21 @@ public class UserService(IUserRepository userRepository,
         return response;
     }
 
+    public async Task<List<UserProfileResponse?>?> ListUsers()
+    {
+        var users = await userRepository.GetAllAsync();
+        return [.. users.Select(user => new UserProfileResponse
+            {
+                Id       = user.Id.ToString(),
+                UserName = user.UserName,
+                Name     = user.Name,
+                Email    = user.Email,
+                Avatar   = CreateAvatarLetters(user.Name, user.LastName)
+            })];
+    }
+
     private static string CreateAvatarLetters(string name, string lastname) =>
         string.Concat(name.AsSpan(0, 1), lastname.AsSpan(0, 1))
             .ToUpper(System.Globalization.CultureInfo.CurrentCulture);
 }
 
-public class UserProfileResponse
-{
-    public required string Id { get; set; }
-    public required string UserName { get; set; }
-    public required string Name { get; set; }
-    public string? Role { get; set; }
-
-    public required string Email { get; set; }
-    public required string Avatar { get; set; }
-}
