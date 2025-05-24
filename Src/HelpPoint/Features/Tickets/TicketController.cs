@@ -69,10 +69,17 @@ public class TicketController(ITicket ticket) : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("assign")]
-    public async Task<IActionResult> AssignUsersAsync([FromBody] AssignUsersRequest request)
+    [HttpPost("{id}/assign")]
+    public async Task<IActionResult> AssignUsersAsync(string id, [FromBody] AssignUsersRequest request)
     {
-        var result = await ticket.AssignUsers(request);
+        var result = await ticket.AssignUsers(id, request);
+        return Ok(result);
+    }
+
+    [HttpGet("{id}/get-assigned")]
+    public async Task<IActionResult> GetAssignedToTicket(string id)
+    {
+        var result = await ticket.ListAssignedUsers(id);
         return Ok(result);
     }
 }

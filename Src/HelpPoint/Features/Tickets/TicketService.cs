@@ -1,7 +1,9 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Features.Auth;
+using HelpPoint.Features.Common;
 using HelpPoint.Features.Support;
+using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Ticket;
@@ -183,5 +185,11 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         await repository.DeleteAsync(ticket);
     }
 
-    public async Task<bool> AssignUsers(AssignUsersRequest request) => await repository.AssignUsers(request.Users, request.TicketId);
+    public async Task<bool>                 AssignUsers(string ticketId,AssignUsersRequest request) => await repository.AssignUsers(request.Users, ticketId);
+
+    public async Task<List<UserProfileResponse>?> ListAssignedUsers(string id)
+    {
+        var listado = await repository.ListAssignedUsers(id);
+        return listado;
+    }
 }

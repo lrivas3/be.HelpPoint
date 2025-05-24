@@ -1,6 +1,7 @@
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Config;
 using HelpPoint.Features.Auth;
+using HelpPoint.Features.Common;
 using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Models.Users;
@@ -71,7 +72,7 @@ public class UserService(IUserRepository userRepository,
             UserName = user.UserName,
             Name = user.Name + " " + user.LastName,
             Email = user.Email,
-            Avatar = CreateAvatarLetters(user.Name, user.LastName)
+            Avatar = Utils.CreateAvatarLetters(user.Name, user.LastName)
         };
 
         return response;
@@ -86,12 +87,9 @@ public class UserService(IUserRepository userRepository,
                 UserName = user.UserName,
                 Name     = user.Name,
                 Email    = user.Email,
-                Avatar   = CreateAvatarLetters(user.Name, user.LastName)
+                Avatar   = Utils.CreateAvatarLetters(user.Name, user.LastName)
             })];
     }
 
-    private static string CreateAvatarLetters(string name, string lastname) =>
-        string.Concat(name.AsSpan(0, 1), lastname.AsSpan(0, 1))
-            .ToUpper(System.Globalization.CultureInfo.CurrentCulture);
 }
 

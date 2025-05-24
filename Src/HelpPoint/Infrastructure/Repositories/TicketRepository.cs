@@ -1,5 +1,7 @@
+using HelpPoint.Features.Common;
 using HelpPoint.Features.Tickets;
 using HelpPoint.Infrastructure.DataBase;
+using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Response;
 using HelpPoint.Infrastructure.Models.Ticket;
 using Microsoft.EntityFrameworkCore;
@@ -96,4 +98,38 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
         await context.TicketAsignaciones.AddRangeAsync(asignaciones);
         return await context.SaveChangesAsync() == requestUsers.Count;
     }
+
+    public async Task<List<UserProfileResponse>?> ListAssignedUsers(string id) =>
+        await context.TicketAsignaciones
+            .Where(ticketAsign => ticketAsign.TicketId == Guid.Parse(id))
+            .Join(
+                context.Users,
+                ticketAsign => ticketAsign.UserId,
+                user => user.Id,
+                (ticketAsign, user) => new { ticketAsign, user }
+            )
+            .GroupJoin(
+                context.UserRoles.Join(context.Roles, ur => ur.RoleId, r => r.Id,
+                    (ur, r) => new { ur.UserId, RoleName = r.Name }),
+                temp => temp.user.Id,
+                ur => ur.UserId,
+                (temp, roles) => new
+                {
+                    temp.ticketAsign,
+                    temp.user,
+                    Role = roles.Select(r => r.RoleName).FirstOrDefault()
+                }
+            )
+            .Select(result => new UserProfileResponse
+            {
+                Id = result.user.Id.ToString(),
+                UserName = result.user.UserName,
+                Name = result.user.Name,
+                LastName = result.user.LastName,
+                Role = result.Role,
+                Email = result.user.Email,
+                Avatar = Utils.CreateAvatarLetters(result.user.Name, result.user.LastName)
+            })
+            .Distinct()
+            .ToListAsync();
 }

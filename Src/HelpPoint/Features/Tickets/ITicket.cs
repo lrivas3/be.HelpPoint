@@ -1,3 +1,4 @@
+using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Request;
 using HelpPoint.Infrastructure.Dtos.Response;
 
@@ -12,5 +13,6 @@ public interface ITicket
     public Task<CommentResponse>            AddCommentAsync(Guid ticketId, TicketCommentRequest request);
     public Task                             ReorderTicketsAsync(IEnumerable<ReorderTicketDto> reorderDto);
     public Task                             DeleteTicket(Guid id);
-    public Task<bool>                             AssignUsers(AssignUsersRequest request);
+    public Task<bool>                       AssignUsers(string ticketId,AssignUsersRequest request);
+    public Task<List<UserProfileResponse>?> ListAssignedUsers(string id);
 }
