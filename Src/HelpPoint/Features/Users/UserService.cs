@@ -86,6 +86,7 @@ public class UserService(IUserRepository userRepository,
                 Id       = user.Id.ToString(),
                 UserName = user.UserName,
                 Name     = user.Name,
+                LastName = user.LastName,
                 Email    = user.Email,
                 Avatar   = Utils.CreateAvatarLetters(user.Name, user.LastName)
             })];
