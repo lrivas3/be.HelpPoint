@@ -98,12 +98,6 @@ public class HelpPointDbContext(DbContextOptions<HelpPointDbContext> options) : 
             .HasForeignKey(a => a.TicketId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<TicketHistorial>()
-            .HasOne(h => h.Ticket)
-            .WithMany()
-            .HasForeignKey(h => h.TicketId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         modelBuilder.Entity<TicketComentario>()
             .HasOne(c => c.Ticket)
             .WithMany()

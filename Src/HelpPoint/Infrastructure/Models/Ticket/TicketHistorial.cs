@@ -22,7 +22,4 @@ public class TicketHistorial
     public string? ValorNuevo { get; set; }
 
     public Guid? ChangedByUserId { get; set; }
-
-    [ForeignKey("TicketId")]
-    public Infrastructure.Models.Ticket.Ticket Ticket { get; set; } = null!;
 }
