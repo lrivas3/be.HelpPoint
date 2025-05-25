@@ -132,4 +132,11 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
             })
             .Distinct()
             .ToListAsync();
+
+    public bool DeleteAssignedUsers(string id, List<string> usersId)
+    {
+        var ticketUsers = context.TicketAsignaciones.Where(x => x.TicketId == Guid.Parse(id) && usersId.Contains(x.UserId.ToString())).ToList();
+        context.TicketAsignaciones.RemoveRange(ticketUsers);
+        return context.SaveChanges() > 0;
+    }
 }

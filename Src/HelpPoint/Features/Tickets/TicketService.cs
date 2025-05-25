@@ -1,7 +1,6 @@
 using AutoMapper;
 using HelpPoint.Common.Errors.Exceptions;
 using HelpPoint.Features.Auth;
-using HelpPoint.Features.Common;
 using HelpPoint.Features.Support;
 using HelpPoint.Infrastructure.Dtos;
 using HelpPoint.Infrastructure.Dtos.Request;
@@ -192,4 +191,7 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         var listado = await repository.ListAssignedUsers(id);
         return listado;
     }
+
+    public bool DeleteAsigned(string id, List<string> usersId) =>
+        repository.DeleteAssignedUsers(id, usersId);
 }

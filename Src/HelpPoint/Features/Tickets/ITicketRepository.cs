@@ -16,5 +16,6 @@ public interface ITicketRepository : IRepository<Ticket>
     public Task<List<TicketComentario>>      ListCommentsByTicketIdAsync(Guid ticketId);
     public Task<List<Ticket>?>               GetManyByIdsAsync(IEnumerable<Guid> ids);
     public Task<bool>                        AssignUsers(List<string> requestUsers, string requestTicketId);
-    public Task<List<UserProfileResponse>?>   ListAssignedUsers(string id);
+    public Task<List<UserProfileResponse>?>  ListAssignedUsers(string id);
+    public bool DeleteAssignedUsers(string id, List<string> usersId);
 }

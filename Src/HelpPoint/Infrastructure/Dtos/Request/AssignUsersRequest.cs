@@ -5,6 +5,6 @@ namespace HelpPoint.Infrastructure.Dtos.Request;
 
 public class AssignUsersRequest
 {
-    [Required(ErrorMessage = "Debe asignar al menos un usuario")]
+    [Required(ErrorMessage = "Debe seleccionar al menos un usuario")]
     public List<string> Users { get; set; } = null!;
 }
