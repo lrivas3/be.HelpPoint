@@ -184,14 +184,11 @@ public class TicketService(IMapper mapper, ITicketRepository repository, ICurren
         await repository.DeleteAsync(ticket);
     }
 
-    public async Task<bool>                 AssignUsers(string ticketId,AssignUsersRequest request) => await repository.AssignUsers(request.Users, ticketId);
+    public async Task<bool> AssignUsers(string ticketId,AssignUsersRequest request) => await repository.AssignUsers(request.Users, ticketId);
 
     public async Task<List<UserProfileResponse>?> ListAssignedUsers(string id)
     {
         var listado = await repository.ListAssignedUsers(id);
         return listado;
     }
-
-    public bool DeleteAsigned(string id, List<string> usersId) =>
-        repository.DeleteAssignedUsers(id, usersId);
 }

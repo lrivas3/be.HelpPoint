@@ -85,6 +85,12 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
 
     public async Task<bool> AssignUsers(List<string> requestUsers, string requestTicketId)
     {
+        //quitar a todos
+        var ticketUsers = context.TicketAsignaciones
+            .Where(x => x.TicketId == Guid.Parse(requestTicketId)).ToList();
+        context.TicketAsignaciones.RemoveRange(ticketUsers);
+
+        // asignar lista
         var asignaciones = requestUsers.Select(requestUser => new TicketAsignacion
         {
             Id = Guid.CreateVersion7(),
@@ -132,11 +138,4 @@ public class TicketRepository(HelpPointDbContext context) : Repository<Ticket>(c
             })
             .Distinct()
             .ToListAsync();
-
-    public bool DeleteAssignedUsers(string id, List<string> usersId)
-    {
-        var ticketUsers = context.TicketAsignaciones.Where(x => x.TicketId == Guid.Parse(id) && usersId.Contains(x.UserId.ToString())).ToList();
-        context.TicketAsignaciones.RemoveRange(ticketUsers);
-        return context.SaveChanges() > 0;
-    }
 }

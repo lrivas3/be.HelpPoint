@@ -16,5 +16,4 @@ public interface ITicket
     public Task                             DeleteTicket(Guid id);
     public Task<bool>                       AssignUsers(string ticketId,AssignUsersRequest request);
     public Task<List<UserProfileResponse>?> ListAssignedUsers(string id);
-    public bool                 DeleteAsigned(string id, List<string> usersId);
 }

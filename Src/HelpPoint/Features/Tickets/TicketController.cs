@@ -82,8 +82,4 @@ public class TicketController(ITicket ticket) : ControllerBase
         var result = await ticket.ListAssignedUsers(id);
         return Ok(result);
     }
-
-    [HttpPost("{id}/assigned/delete")]
-    public bool DeleteAsignedToTicket(string id, [FromBody] AssignUsersRequest usersId) =>
-        ticket.DeleteAsigned(id, usersId.Users);
 }
